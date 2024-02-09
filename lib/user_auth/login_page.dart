@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logisticapp/custom_widgets/login_screen_background_elipse.dart';
 import 'package:logisticapp/custom_widgets/login_screen_details_form.dart';
 
