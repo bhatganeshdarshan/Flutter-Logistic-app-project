@@ -72,17 +72,7 @@ Widget loginFormDetails(BuildContext context) {
                     ],
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      // border: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                      // ),
-                      // border: InputBorder.none,
                       hintText: 'Enter your phone number',
-                      // prefixIcon: CountryCodePicker(
-                      //   initialSelection: 'IN',
-                      //   showCountryOnly: false,
-                      //   showOnlyCountryWhenClosed: false,
-                      //   alignLeft: false,
-                      // ),
                     ),
                   ),
                 ),
@@ -94,13 +84,12 @@ Widget loginFormDetails(BuildContext context) {
                     MaterialPageRoute(builder: (context) => const OtpVerify()),
                   );
                 },
-                child: const Icon(Icons.arrow_forward_rounded),
                 style: ElevatedButton.styleFrom(
-                    //shadowColor: const Color.fromARGB(30, 0, 0, 0),
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue[300],
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(10)),
+                child: const Icon(Icons.arrow_forward_rounded),
               ),
             ]),
           ),

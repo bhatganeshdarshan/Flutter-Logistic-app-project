@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logisticapp/custom_widgets/login_screen_background_elipse.dart';
+import 'package:logisticapp/custom_widgets/otp_details.dart';
 
 class OtpVerify extends StatefulWidget {
   const OtpVerify({super.key});
@@ -18,8 +19,13 @@ class _OtpVerifyState extends State<OtpVerify> {
         children: [
           SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 loginBackgroundShape(height, width),
+                const SizedBox(
+                  height: 40,
+                ),
+                otpDetails(context),
               ],
             ),
           ),
