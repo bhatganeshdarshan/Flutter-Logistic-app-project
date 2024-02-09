@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:logisticapp/user_auth/otp_verify.dart';
 
-Widget loginFormDetails() {
+Widget loginFormDetails(BuildContext context) {
   final numbercontroller = TextEditingController();
   CountryCode _countryCode = CountryCode(code: 'IN', dialCode: '+91');
 
@@ -36,8 +37,8 @@ Widget loginFormDetails() {
               boxShadow: const [
                 BoxShadow(
                   color: Color.fromARGB(30, 0, 0, 0),
-                  spreadRadius: 1,
-                  blurRadius: 4,
+                  spreadRadius: 5,
+                  blurRadius: 3,
                 ),
               ],
               color: Colors.white,
@@ -85,6 +86,21 @@ Widget loginFormDetails() {
                     ),
                   ),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OtpVerify()),
+                  );
+                },
+                child: const Icon(Icons.arrow_forward_rounded),
+                style: ElevatedButton.styleFrom(
+                    //shadowColor: const Color.fromARGB(30, 0, 0, 0),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue[300],
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(10)),
               ),
             ]),
           ),
