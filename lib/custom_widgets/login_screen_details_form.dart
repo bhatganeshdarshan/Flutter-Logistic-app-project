@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/services.dart';
 
 Widget loginFormDetails() {
   final numbercontroller = TextEditingController();
@@ -65,6 +66,9 @@ Widget loginFormDetails() {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
                     keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       // border: OutlineInputBorder(
