@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 Widget loginFormDetails() {
+  final numbercontroller = TextEditingController();
+  CountryCode _countryCode = CountryCode(code: 'IN', dialCode: '+91');
+
   return Container(
     alignment: Alignment.topLeft,
     padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -39,10 +43,6 @@ Widget loginFormDetails() {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(children: [
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
               Container(
                 width: 1,
                 height: 60,
@@ -51,15 +51,16 @@ Widget loginFormDetails() {
               Expanded(
                 flex: 3,
                 child: Container(
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Enter Your Mobile Number",
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                        border: InputBorder.none,
+                  child: TextFormField(
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your phone number',
+                      prefixIcon: CountryCodePicker(
+                        initialSelection: 'IN',
+                        showCountryOnly: false,
+                        showOnlyCountryWhenClosed: false,
+                        alignLeft: false,
                       ),
                     ),
                   ),
