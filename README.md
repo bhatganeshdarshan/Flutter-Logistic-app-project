@@ -1,16 +1,3 @@
-# logisticapp
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Logistic app
+App built using Flutter which follows the below idea
+![3dea9946-1c6a-4924-ac2d-779dae04fd59](https://github.com/bhatganeshdarshan/Flutter-Logistic-app-project/assets/145460433/71e7430c-2030-4be3-943b-9e1132ab5e4a)
