@@ -10,6 +10,8 @@ class OtpVerify extends StatefulWidget {
 }
 
 class _OtpVerifyState extends State<OtpVerify> {
+  final pinController = TextEditingController();
+  final focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -25,7 +27,8 @@ class _OtpVerifyState extends State<OtpVerify> {
                 const SizedBox(
                   height: 40,
                 ),
-                otpDetails(context, widget.verificationId),
+                otpDetails(
+                    context, widget.verificationId, pinController, focusNode),
               ],
             ),
           ),

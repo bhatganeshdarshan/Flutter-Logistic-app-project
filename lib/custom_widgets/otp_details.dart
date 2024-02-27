@@ -6,10 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/home-page/home.dart';
 import 'package:pinput/pinput.dart';
 
-Widget otpDetails(BuildContext context, String verificationId) {
-  final pinController = TextEditingController();
-  final focusNode = FocusNode();
-  final formKey = GlobalKey<FormState>();
+Widget otpDetails(BuildContext context, String verificationId,
+    TextEditingController pinController, FocusNode focusNode) {
   const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
   const fillColor = Color.fromRGBO(243, 246, 249, 0);
   const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -26,7 +24,6 @@ Widget otpDetails(BuildContext context, String verificationId) {
     ),
   );
   return Container(
-    // padding: const EdgeInsets.symmetric(horizontal: 25),
     child: SingleChildScrollView(
       child: Column(
         children: [
@@ -39,7 +36,6 @@ Widget otpDetails(BuildContext context, String verificationId) {
             height: 30,
           ),
           Form(
-            // key: formKey,  <- need to be added
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -49,18 +45,18 @@ Widget otpDetails(BuildContext context, String verificationId) {
                     length: 6,
                     controller: pinController,
                     focusNode: focusNode,
-                    androidSmsAutofillMethod:
-                        AndroidSmsAutofillMethod.smsUserConsentApi,
-                    listenForMultipleSmsOnAndroid: true,
+                    // androidSmsAutofillMethod:
+                    //     AndroidSmsAutofillMethod.smsUserConsentApi,
+                    // listenForMultipleSmsOnAndroid: true,
                     defaultPinTheme: defaultPinTheme,
                     separatorBuilder: (index) => const SizedBox(width: 8),
-                    validator: (value) {
-                      return value == verificationId ? null : 'Incorrect OTP';
-                    },
+                    // validator: (value) {
+                    //   return value == verificationId ? null : 'Incorrect OTP';
+                    // },
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
-                    onCompleted: (pin) {
-                      debugPrint('onCompleted: $pin');
-                    },
+                    // onCompleted: (pin) {
+                    //   debugPrint('onCompleted: $pin');
+                    // },
                     onChanged: (value) {
                       debugPrint('onChanged: $value');
                     },
@@ -102,7 +98,6 @@ Widget otpDetails(BuildContext context, String verificationId) {
                   ),
                   onPressed: () async {
                     focusNode.unfocus();
-                    // formKey.currentState!.validate();
                     try {
                       PhoneAuthCredential credential =
                           await PhoneAuthProvider.credential(
