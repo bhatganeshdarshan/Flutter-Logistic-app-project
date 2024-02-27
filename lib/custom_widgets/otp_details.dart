@@ -1,15 +1,18 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logisticapp/home-page/home.dart';
 import 'package:pinput/pinput.dart';
 
-Widget otpDetails(BuildContext context) {
+Widget otpDetails(BuildContext context, String verificationId) {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
   const fillColor = Color.fromRGBO(243, 246, 249, 0);
   const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
-
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 56,
@@ -43,6 +46,7 @@ Widget otpDetails(BuildContext context) {
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Pinput(
+                    length: 6,
                     controller: pinController,
                     focusNode: focusNode,
                     androidSmsAutofillMethod:
@@ -51,7 +55,7 @@ Widget otpDetails(BuildContext context) {
                     defaultPinTheme: defaultPinTheme,
                     separatorBuilder: (index) => const SizedBox(width: 8),
                     validator: (value) {
-                      return value == '2222' ? null : 'Incorrect OTP';
+                      return value == verificationId ? null : 'Incorrect OTP';
                     },
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
                     onCompleted: (pin) {
@@ -96,9 +100,25 @@ Widget otpDetails(BuildContext context) {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[200],
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     focusNode.unfocus();
-                    formKey.currentState!.validate();
+                    // formKey.currentState!.validate();
+                    try {
+                      PhoneAuthCredential credential =
+                          await PhoneAuthProvider.credential(
+                              verificationId: verificationId,
+                              smsCode: pinController.text.toString());
+                      FirebaseAuth.instance
+                          .signInWithCredential(credential)
+                          .then((value) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()));
+                      });
+                    } catch (ex) {
+                      log(ex.toString());
+                    }
                   },
                   child: Text(
                     'Submit',

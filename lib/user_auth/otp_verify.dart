@@ -3,8 +3,8 @@ import 'package:logisticapp/custom_widgets/login_screen_background_elipse.dart';
 import 'package:logisticapp/custom_widgets/otp_details.dart';
 
 class OtpVerify extends StatefulWidget {
-  const OtpVerify({super.key});
-
+  OtpVerify({super.key, required this.verificationId});
+  final String verificationId;
   @override
   State<OtpVerify> createState() => _OtpVerifyState();
 }
@@ -25,7 +25,7 @@ class _OtpVerifyState extends State<OtpVerify> {
                 const SizedBox(
                   height: 40,
                 ),
-                otpDetails(context),
+                otpDetails(context, widget.verificationId),
               ],
             ),
           ),

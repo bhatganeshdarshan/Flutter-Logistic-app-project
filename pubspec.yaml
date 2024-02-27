@@ -30,12 +30,14 @@ environment:
 dependencies:
   country_code_picker: ^3.0.0
   cupertino_icons: ^1.0.2
+  firebase_core: ^2.25.4
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.9
   get: ^4.6.6
   google_fonts: ^6.1.0
   pinput: ^3.0.1
+  firebase_auth: ^4.17.4
 
 dev_dependencies:
   flutter_lints: ^3.0.1

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "929910218798",
+    "project_id": "logistic-app-flutter",
+    "storage_bucket": "logistic-app-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929910218798:android:99952c6e0ad363910dffbf",
+        "android_client_info": {
+          "package_name": "com.example.logisticapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4bdDNfm-14NlQ7DWp9QFttRy7fJc-t2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

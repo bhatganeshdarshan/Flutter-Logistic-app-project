@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:logisticapp/user_auth/otp_verify.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Widget loginFormDetails(BuildContext context) {
   final numbercontroller = TextEditingController();
@@ -66,6 +67,7 @@ Widget loginFormDetails(BuildContext context) {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
+                    controller: numbercontroller,
                     keyboardType: TextInputType.phone,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
@@ -78,11 +80,22 @@ Widget loginFormDetails(BuildContext context) {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const OtpVerify()),
-                  );
+                onPressed: () async {
+                  await FirebaseAuth.instance.verifyPhoneNumber(
+                      verificationCompleted:
+                          (PhoneAuthCredential credential) {},
+                      verificationFailed: (FirebaseAuthException ex) {},
+                      codeSent: (String verificationId, int? resendToken) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OtpVerify(
+                                    verificationId: verificationId,
+                                  )),
+                        );
+                      },
+                      codeAutoRetrievalTimeout: (String verificationId) {},
+                      phoneNumber: "+91${numbercontroller.text}");
                 },
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
