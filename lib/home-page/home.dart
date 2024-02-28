@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:logisticapp/custom_widgets/drawer_items.dart';
+import 'package:logisticapp/custom_widgets/drawer_profile_container.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,11 +13,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Logistic app"),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              DrawerProfileHeader(),
+              SizedBox(
+                height: 20,
+              ),
+              DrawerItems(),
+            ],
+          ),
+        ),
       ),
-      body: const Center(
-        child: Text("Home Page"),
+      appBar: AppBar(
+        title: const Center(
+          child: Text("App logo"),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [],
+        ),
       ),
     );
   }

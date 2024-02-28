@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:logisticapp/order_track/track_order.dart';
+
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:logisticapp/home-page/home.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }
