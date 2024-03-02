@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DrawerItems extends StatelessWidget {
-  const DrawerItems({super.key});
+  const DrawerItems({super.key, required this.ontap});
+
+  final void Function(String activeScreen) ontap;
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         ListTile(
           leading: const Icon(
@@ -19,7 +21,9 @@ class DrawerItems extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            ontap('home');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -33,7 +37,9 @@ class DrawerItems extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            ontap('wallet');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -47,7 +53,9 @@ class DrawerItems extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            ontap('track');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -61,7 +69,9 @@ class DrawerItems extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            ontap('setting');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -75,7 +85,9 @@ class DrawerItems extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            ontap('about');
+          },
         ),
       ],
     );
