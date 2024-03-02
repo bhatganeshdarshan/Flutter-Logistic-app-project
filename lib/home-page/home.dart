@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
+      drawer: const Drawer(
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           child: Text("App logo"),
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           children: [],
         ),
