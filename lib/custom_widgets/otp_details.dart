@@ -6,10 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/home-page/home.dart';
+import 'package:logisticapp/user_auth/authentication_service.dart';
 import 'package:pinput/pinput.dart';
 
-Widget otpDetails(BuildContext context, String verificationId,
-    TextEditingController pinController, FocusNode focusNode) {
+Widget otpDetails(BuildContext context, TextEditingController pinController,
+    FocusNode focusNode, String phoneController) {
+  final _authenticationService = AuthenticationService();
   const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
   const fillColor = Color.fromRGBO(243, 246, 249, 0);
   const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -98,23 +100,40 @@ Widget otpDetails(BuildContext context, String verificationId,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[200],
                   ),
+                  // onPressed: () async {
+                  //   focusNode.unfocus();
+                  //   try {
+                  //     PhoneAuthCredential credential =
+                  //         await PhoneAuthProvider.credential(
+                  //             verificationId: verificationId,
+                  //             smsCode: pinController.text.toString());
+                  //     FirebaseAuth.instance
+                  //         .signInWithCredential(credential)
+                  //         .then((value) {
+                  //       Navigator.pushReplacement(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) => const HomePage()));
+                  //     });
+                  //   } catch (ex) {
+                  //     log(ex.toString());
+                  //   }
+                  // },
                   onPressed: () async {
                     focusNode.unfocus();
                     try {
-                      PhoneAuthCredential credential =
-                          await PhoneAuthProvider.credential(
-                              verificationId: verificationId,
-                              smsCode: pinController.text.toString());
-                      FirebaseAuth.instance
-                          .signInWithCredential(credential)
-                          .then((value) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()));
-                      });
-                    } catch (ex) {
-                      log(ex.toString());
+                      print(pinController.text.toString());
+                      print(phoneController);
+                      await _authenticationService.verifyUser(
+                          otp: pinController.text.toString(),
+                          phoneNumber: phoneController);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Login Failed : $e")));
                     }
                   },
                   child: Text(
