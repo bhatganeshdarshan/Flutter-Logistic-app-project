@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logisticapp/custom_widgets/drawer_items.dart';
 import 'package:logisticapp/custom_widgets/drawer_profile_container.dart';
 import 'package:logisticapp/order_track/track_order.dart';
+import 'package:logisticapp/providers/supabase_manager.dart';
 import 'package:logisticapp/screens/about_screen.dart';
 import 'package:logisticapp/screens/drawer.dart';
 import 'package:logisticapp/screens/setting_screens.dart';
@@ -15,6 +16,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // final vehicleData = SupabaseManager();
+  // late dynamic v;
+  // @override
+  // void initState() {
+  //   readData();
+  //   super.initState();
+  // }
+
+  // readData() async {
+  //   var vehicles = await vehicleData.readData();
+  //   v = vehicles;
+  //   print(vehicles);
+  // }
+
   void setScreen(String activeScreen) {
     if (activeScreen == 'home') {
       Navigator.of(context).pop();
@@ -56,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           child: Text("App logo"),
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [],
         ),
