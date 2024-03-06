@@ -321,7 +321,7 @@ packages:
     source: hosted
     version: "0.15.4"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: a2bbf9d017fcced29139daa8ed2bba4ece450ab222871df93ca9eec6f80c34ba
@@ -424,6 +424,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  models:
+    dependency: "direct main"
+    description:
+      path: "packages/models"
+      relative: true
+    source: path
+    version: "0.0.1"
   path:
     dependency: transitive
     description:
@@ -678,7 +685,7 @@ packages:
     source: hosted
     version: "1.2.0"
   supabase:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: supabase
       sha256: f431753d2a4cb9dacd72c7378154f806c2b2cef23859bd9cee1add23821e874d

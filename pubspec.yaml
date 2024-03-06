@@ -43,6 +43,10 @@ dependencies:
   location: ^5.0.3
   equatable: ^2.0.5
   supabase_flutter: ^2.3.4
+  http: ^1.2.0
+  supabase: ^2.0.8
+  models:
+    path: packages/models
 
 dev_dependencies:
   flutter_lints: ^3.0.1
