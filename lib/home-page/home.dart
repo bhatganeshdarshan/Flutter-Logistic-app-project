@@ -15,33 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-<<<<<<< HEAD
-  List<ListTile> drawerItems = [
-    ListTile(
-      leading: const Icon(Icons.account_box),
-      title: const Text("Profile"),
-      onTap: () {},
-    ),
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerProfileHeader(),
-            const SizedBox(
-              height: 20,
-            ),
-            ListView.builder(
-              itemCount: drawerItems.length,
-              itemBuilder: (context, index) {
-                return DrawerItems(context, drawerItems[index]);
-              },
-            )
-          ],
-        ),
-=======
   void setScreen(String activeScreen) {
     if (activeScreen == 'home') {
       Navigator.of(context).pop();
@@ -77,7 +50,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: MyDrawer(
         setScreen: setScreen,
->>>>>>> origin/main
       ),
       appBar: AppBar(
         title: const Center(

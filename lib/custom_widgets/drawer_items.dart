@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-<<<<<<< HEAD
-Widget DrawerItems(BuildContext context, ListTile drawerItem) {
-  return drawerItem;
-=======
 class DrawerItems extends StatelessWidget {
   const DrawerItems({super.key, required this.ontap});
 
@@ -96,5 +92,4 @@ class DrawerItems extends StatelessWidget {
       ],
     );
   }
->>>>>>> origin/main
 }
