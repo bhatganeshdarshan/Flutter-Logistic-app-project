@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logisticapp/screens/home-page/edit_profile.dart';
 
 class DrawerProfileHeader extends StatefulWidget {
   const DrawerProfileHeader({super.key});
@@ -43,7 +44,13 @@ class _DrawerProfileHeaderState extends State<DrawerProfileHeader> {
               ),
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const EditProfile();
+                    },
+                  ));
+                },
               ),
             ],
           ),
