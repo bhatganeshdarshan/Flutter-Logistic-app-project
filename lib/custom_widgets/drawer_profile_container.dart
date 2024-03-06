@@ -24,7 +24,7 @@ class _DrawerProfileHeaderState extends State<DrawerProfileHeader> {
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage("assets/images/profile.png"),
+                image: AssetImage("assets/images/profile.jpg"),
               ),
             ),
           ),

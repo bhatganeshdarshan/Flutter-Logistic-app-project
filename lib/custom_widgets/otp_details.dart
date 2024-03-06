@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logisticapp/home-page/home.dart';
+import 'package:logisticapp/screens/home-page/home.dart';
 import 'package:pinput/pinput.dart';
 
 Widget otpDetails(BuildContext context, String verificationId,
