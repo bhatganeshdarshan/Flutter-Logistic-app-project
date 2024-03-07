@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logisticapp/screens/home-page/edit_profile.dart';
+import 'package:logisticapp/screens/account-page/edit_profile.dart';
 
 class DrawerProfileHeader extends StatefulWidget {
   const DrawerProfileHeader({super.key});

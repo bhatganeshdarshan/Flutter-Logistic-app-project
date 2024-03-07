@@ -26,7 +26,9 @@ android {
     namespace "com.example.logisticapp"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
-
+    lint {
+            baseline = file("lint-baseline.xml")
+        }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -45,7 +47,7 @@ android {
         applicationId "com.example.logisticapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 20
+        minSdkVersion 28
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
