@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logisticapp/constants/constants.dart';
 import 'package:logisticapp/screens/account-page/account.dart';
 import 'package:logisticapp/screens/home-page/home.dart';
 import 'package:logisticapp/screens/order-page/order.dart';
@@ -13,7 +14,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
-  void initState() {
+  void initSsdtate() {
     super.initState();
   }
 
@@ -44,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
               )),
               shadowColor: const Color(0xff9BCF53),
               elevation: 8,
-              backgroundColor: const Color(0xff9BCF53),
+              backgroundColor:  Color(0xFF30b9b2),
               leading: IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.arrow_back),
