@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             const Icon(
                               Icons.gps_fixed,
-                              color: Color(0xff9BCF53),
+                              color: Color(0xFF30b9b2),
                             ),
                             Text(
                               "Enter Pickup Location",
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {},
                                 icon: const Icon(
                                   Icons.add,
-                                  color: Color(0xff9BCF53),
+                                  color: Color(0xFF30b9b2),
                                   size: 30,
                                 )),
                           ],
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             const Icon(
                               Icons.gps_not_fixed_outlined,
-                              color: Color(0xff9BCF53),
+                              color: Color(0xFF30b9b2),
                             ),
                             Text(
                               "Enter Drop Location    ",
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {},
                                 icon: const Icon(
                                   Icons.add,
-                                  color: Color(0xff9BCF53),
+                                  color: Color(0xFF30b9b2),
                                   size: 30,
                                 )),
                           ],
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(8),
                             side: BorderSide(
                               color: (isClicked && clickedCard == index)
-                                  ? const Color(0xff9BCF53)
+                                  ? const Color(0xFF30b9b2)
                                   : Colors.transparent,
                               width: 4,
                             ),
