@@ -35,72 +35,82 @@ class _MainScreenState extends State<MainScreen> {
       child: SafeArea(
         top: false,
         child: Scaffold(
-          appBar: AppBar(
-            elevation: 10,
-            backgroundColor: const Color(0xff9BCF53),
-            leading: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_back),
-              color: Colors.white,
-            ),
-            actions: <Widget>[
-              IconButton(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(140),
+            child: AppBar(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20),
+              )),
+              shadowColor: const Color(0xff9BCF53),
+              elevation: 8,
+              backgroundColor: const Color(0xff9BCF53),
+              leading: IconButton(
                 onPressed: () {},
+                icon: const Icon(Icons.arrow_back),
                 color: Colors.white,
-                icon: const Icon(Icons.search),
               ),
-              IconButton(
-                color: Colors.white,
-                onPressed: () {},
-                icon: const Icon(Icons.notification_add),
-              ),
-            ],
-            bottom: TabBar(
-              physics: BouncingScrollPhysics(
-                decelerationRate: ScrollDecelerationRate.normal,
-              ),
-              isScrollable: true,
-              onTap: (value) {
-                setState(() {
-                  currentTab = value;
-                });
-              },
-              indicatorColor: Colors.white,
-              labelColor: Colors.white,
-              tabs: [
-                Tab(
-                  child: Text(
-                    "Home",
-                    style: TextStyle(
-                      fontSize: (currentTab == 0) ? 32 : 16,
-                    ),
-                  ),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {},
+                  color: Colors.white,
+                  icon: const Icon(Icons.search),
                 ),
-                Tab(
-                  child: Text(
-                    "Orders",
-                    style: TextStyle(
-                      fontSize: (currentTab == 1) ? 32 : 16,
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    "Wallet",
-                    style: TextStyle(
-                      fontSize: (currentTab == 2) ? 32 : 16,
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    "Account",
-                    style: TextStyle(
-                      fontSize: (currentTab == 3) ? 32 : 16,
-                    ),
-                  ),
+                IconButton(
+                  color: Colors.white,
+                  onPressed: () {},
+                  icon: const Icon(Icons.notification_add),
                 ),
               ],
+              bottom: TabBar(
+                dividerColor: Colors.transparent,
+                padding: EdgeInsets.only(bottom: 25),
+                physics: BouncingScrollPhysics(
+                  decelerationRate: ScrollDecelerationRate.normal,
+                ),
+                isScrollable: true,
+                onTap: (value) {
+                  setState(() {
+                    currentTab = value;
+                  });
+                },
+                indicatorColor: Colors.white,
+                labelColor: Colors.white,
+                tabs: [
+                  Tab(
+                    child: Text(
+                      "Home",
+                      style: TextStyle(
+                        fontSize: (currentTab == 0) ? 32 : 16,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "Orders",
+                      style: TextStyle(
+                        fontSize: (currentTab == 1) ? 32 : 16,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "Wallet",
+                      style: TextStyle(
+                        fontSize: (currentTab == 2) ? 32 : 16,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "Account",
+                      style: TextStyle(
+                        fontSize: (currentTab == 3) ? 32 : 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           body: screenLists[currentTab],
