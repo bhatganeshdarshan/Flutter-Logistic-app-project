@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logisticapp/entrypage.dart';
 import 'package:logisticapp/user_auth/authentication_service.dart';
 import 'package:pinput/pinput.dart';
 
@@ -123,15 +124,13 @@ Widget otpDetails(BuildContext context, TextEditingController pinController,
                   onPressed: () async {
                     focusNode.unfocus();
                     try {
-                      print(pinController.text.toString());
-                      print(phoneController);
                       await _authenticationService.verifyUser(
                           otp: pinController.text.toString(),
                           phoneNumber: phoneController);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()));
+                              builder: (context) => MainScreen()));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Login Failed : $e")));
