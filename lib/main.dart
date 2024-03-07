@@ -15,32 +15,28 @@ void main() async {
   runApp(const MyApp());
 }
 
-
-
-  class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-       designSize: const Size(375, 825),
-        minTextAdapt: true,
+      designSize: const Size(375, 825),
+      minTextAdapt: true,
       splitScreenMode: true,
-
-      builder: (_ , child) {
-         return MaterialApp(
-           debugShowCheckedModeBanner: false,
-            title: 'First Method',
-  // You can use the library anywhere in the app even in theme
-            theme: ThemeData(
-           scaffoldBackgroundColor: kOffWhite,
+      builder: (_, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'First Method',
+          // You can use the library anywhere in the app even in theme
+          theme: ThemeData(
+              scaffoldBackgroundColor: kOffWhite,
               iconTheme: const IconThemeData(color: kDark),
-              primarySwatch: Colors.grey
-            ),
-        home: child,
-  );
-  },
-      child:  MainScreen(),
-  );
+              primarySwatch: Colors.grey),
+          home: child,
+        );
+      },
+      child: const MainScreen(),
+    );
   }
-  }
+}
