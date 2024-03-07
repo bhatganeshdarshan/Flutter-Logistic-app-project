@@ -17,7 +17,7 @@ class AuthenticationService {
         type: OtpType.sms,
         phone: phoneNumber,
       );
-      print(response.user);
+      // print(response.user);
       return response.user;
     } on Exception catch (e) {
       throw Exception(e.toString());

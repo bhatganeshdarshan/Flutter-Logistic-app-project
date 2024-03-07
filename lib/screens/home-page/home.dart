@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int? clickedCard;
   bool isClicked = false;
-  bool isLoading = true; // Track whether data is loading
+  bool isLoading = true;
   final vehicleData = SupabaseManager();
   late dynamic vehicle;
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   readData() async {
     vehicle = await vehicleData.readData();
     setState(() {
-      isLoading = false; // Data loading completed
+      isLoading = false;
     });
     // print(vehicle);
   }
@@ -121,34 +121,33 @@ class _HomePageState extends State<HomePage> {
                             // color: Colors.red,
                             height: 180,
                             width: double.infinity,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  // isClicked = !isClicked;
-                                  if (clickedCard == index &&
-                                      isClicked == true) {
-                                    isClicked = false;
-                                  } else {
-                                    isClicked = true;
-                                  }
-                                  clickedCard = index;
-                                });
-                              },
-                              child: Card(
-                                // color: Colors.green,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  side: BorderSide(
-                                    color: (isClicked && clickedCard == index)
-                                        ? const Color(0xFF30b9b2)
-                                        : Colors.transparent,
-                                    width: 3,
-                                  ),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                side: BorderSide(
+                                  color: (isClicked && clickedCard == index)
+                                      ? const Color(0xFF30b9b2)
+                                      : Colors.transparent,
+                                  width: 3,
                                 ),
-                                shadowColor: Colors.black,
-                                elevation: 5,
-                                margin: const EdgeInsets.only(
-                                    left: 20, right: 20, top: 20),
+                              ),
+                              shadowColor: Colors.black,
+                              elevation: 5,
+                              margin: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 20),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    // isClicked = !isClicked;
+                                    if (clickedCard == index &&
+                                        isClicked == true) {
+                                      isClicked = false;
+                                    } else {
+                                      isClicked = true;
+                                    }
+                                    clickedCard = index;
+                                  });
+                                },
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,

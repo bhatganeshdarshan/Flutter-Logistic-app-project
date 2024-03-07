@@ -105,7 +105,7 @@ class _MainScreenState extends State<MainScreen>
             HomePage(),
             OrderPage(),
             myWallet(),
-            myAccount(),
+            MyAccount(),
           ],
         ),
       ),

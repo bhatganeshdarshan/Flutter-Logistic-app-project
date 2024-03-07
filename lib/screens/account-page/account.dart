@@ -1,46 +1,109 @@
 import 'package:flutter/material.dart';
-import 'package:logisticapp/screens/account-page/about_screen.dart';
-import 'package:logisticapp/screens/account-page/setting_screens.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:logisticapp/providers/supabase_manager.dart';
 
-import '../drawer.dart';
+class MyAccount extends StatefulWidget {
+  const MyAccount({super.key});
 
-// class myaccount extends StatefulWidget {
-//   const myaccount({super.key});
+  @override
+  State<MyAccount> createState() => _MyAccountState();
+}
 
-//   @override
-//   State<myaccount> createState() => _myaccountState();
-// }
+class _MyAccountState extends State<MyAccount> {
+  bool isLoaded = false;
+  final userdata = SupabaseUserManager();
+  late dynamic user;
 
-// class _myaccountState extends State<myaccount> {
-//   void setScreen(String activeScreen) {
-//     if (activeScreen == 'setting') {
-//       Navigator.of(context).push(
-//         MaterialPageRoute(
-//           builder: (ctx) => SettingScreen(setScreen: setScreen),
-//         ),
-//       );
-//     } else if (activeScreen == 'about') {
-//       Navigator.of(context).push(
-//         MaterialPageRoute(
-//           builder: (ctx) => AboutScreen(setScreen: setScreen),
-//         ),
-//       );
-//     }
-//   }
+  @override
+  void initState() {
+    readData();
+    super.initState();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Account '),
-//       ),
-//       body: MyDrawer(
-//       setScreen: setScreen,
-//     ),
-//     );
-//   }
-// }
+  readData() async {
+    user = await userdata.readData();
+    setState(() {
+      isLoaded = true;
+    });
+    print(user);
+  }
 
-Widget myAccount() {
-  return const Center(child: Text("my account"));
+  @override
+  Widget build(BuildContext context) {
+    return (isLoaded == true)
+        ? Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const CircleAvatar(
+                  maxRadius: 80,
+                  child: Icon(
+                    Icons.person,
+                    size: 75,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "+${user[0]['phone']}",
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                  ),
+                ),
+                (user[0]['first_name'] != null)
+                    ? Text(
+                        "${user[0]['first_name']}",
+                        style: GoogleFonts.poppins(fontSize: 18),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            " First Name",
+                            style: GoogleFonts.poppins(
+                                fontSize: 18, color: Colors.grey),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                            ),
+                            tooltip: "Enter first name",
+                          ),
+                        ],
+                      ),
+                (user[0]['last_name'] != null)
+                    ? Text(
+                        "${user[0]['last_name']}",
+                        style: GoogleFonts.poppins(fontSize: 18),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            " Last Name",
+                            style: GoogleFonts.poppins(
+                                fontSize: 18, color: Colors.grey),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                            ),
+                            tooltip: "Enter Last name",
+                          ),
+                        ],
+                      )
+              ],
+            ),
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
+  }
 }
