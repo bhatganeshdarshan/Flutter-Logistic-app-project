@@ -5,115 +5,107 @@ import 'package:logisticapp/screens/order-page/order.dart';
 import 'package:logisticapp/screens/payment-page/wallet_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  int currentTab = 0;
+
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        currentTab = _tabController.index;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    int currentTab = 0;
-    bool isClicked = false;
-    late TabController _tabController;
-    List<Widget> screenLists = [
-      HomePage(),
-      myOrder(),
-      myWallet(),
-      myAccount(),
-    ];
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: 4,
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(140),
-            child: AppBar(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
-              )),
-              shadowColor: const Color(0xff9BCF53),
-              elevation: 8,
-              backgroundColor: const Color(0xff9BCF53),
-              leading: IconButton(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(140),
+          child: AppBar(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+            ),
+            shadowColor: const Color(0xff9BCF53),
+            elevation: 8,
+            backgroundColor: const Color(0xff9BCF53),
+            leading: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.white,
+            ),
+            actions: <Widget>[
+              IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.arrow_back),
                 color: Colors.white,
+                icon: const Icon(Icons.search),
               ),
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {},
-                  color: Colors.white,
-                  icon: const Icon(Icons.search),
+              IconButton(
+                color: Colors.white,
+                onPressed: () {},
+                icon: const Icon(Icons.notification_add),
+              ),
+            ],
+            bottom: TabBar(
+              dividerColor: Colors.transparent,
+              controller: _tabController,
+              indicatorColor: Colors.white,
+              labelColor: Colors.white,
+              isScrollable: true,
+              onTap: (index) {
+                setState(() {
+                  currentTab = index;
+                });
+              },
+              tabs: [
+                Tab(
+                  child: Text(
+                    "Home",
+                    style: TextStyle(fontSize: (currentTab == 0) ? 32 : 16),
+                  ),
                 ),
-                IconButton(
-                  color: Colors.white,
-                  onPressed: () {},
-                  icon: const Icon(Icons.notification_add),
+                Tab(
+                  child: Text(
+                    "Orders",
+                    style: TextStyle(fontSize: (currentTab == 1) ? 32 : 16),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Wallet",
+                    style: TextStyle(fontSize: (currentTab == 2) ? 32 : 16),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Account",
+                    style: TextStyle(fontSize: (currentTab == 3) ? 32 : 16),
+                  ),
                 ),
               ],
-              bottom: TabBar(
-                dividerColor: Colors.transparent,
-                padding: EdgeInsets.only(bottom: 25),
-                physics: BouncingScrollPhysics(
-                  decelerationRate: ScrollDecelerationRate.normal,
-                ),
-                isScrollable: true,
-                onTap: (value) {
-                  setState(() {
-                    currentTab = value;
-                  });
-                },
-                indicatorColor: Colors.white,
-                labelColor: Colors.white,
-                tabs: [
-                  Tab(
-                    child: Text(
-                      "Home",
-                      style: TextStyle(
-                        fontSize: (currentTab == 0) ? 32 : 16,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      "Orders",
-                      style: TextStyle(
-                        fontSize: (currentTab == 1) ? 32 : 16,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      "Wallet",
-                      style: TextStyle(
-                        fontSize: (currentTab == 2) ? 32 : 16,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      "Account",
-                      style: TextStyle(
-                        fontSize: (currentTab == 3) ? 32 : 16,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
-          body: screenLists[currentTab],
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            HomePage(),
+            OrderPage(),
+            myWallet(),
+            myAccount(),
+          ],
         ),
       ),
     );
