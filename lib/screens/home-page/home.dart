@@ -9,7 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<int> testList = [1, 2, 3, 4, 5];
   int? clickedCard;
   bool isClicked = false;
   bool isLoading = true; // Track whether data is loading
@@ -138,12 +137,12 @@ class _HomePageState extends State<HomePage> {
                               child: Card(
                                 // color: Colors.green,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(12),
                                   side: BorderSide(
                                     color: (isClicked && clickedCard == index)
                                         ? const Color(0xFF30b9b2)
                                         : Colors.transparent,
-                                    width: 4,
+                                    width: 3,
                                   ),
                                 ),
                                 shadowColor: Colors.black,
