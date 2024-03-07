@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                          Image.asset(
-                                           'assets/icons/twowheeler.png',
+                                           'assets/icons/${vehicle[index]['id']}.png',
                                            width: 60,
                                            height: 60,
 

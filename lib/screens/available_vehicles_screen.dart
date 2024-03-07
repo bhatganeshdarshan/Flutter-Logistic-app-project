@@ -30,6 +30,7 @@ class _AvailableVehiclesState extends State<AvailableVehicles> {
         itemCount: vehicle.length,
         itemBuilder: (context, index) {
           return ListTile(
+            subtitle: Image.asset('assets/icons/${vehicle[index]['id']}.png'),
             title: Text("${vehicle[index]['vehicle_name']}"),
             leading: Text("Capacity : ${vehicle[index]['capacity']} KG"),
             trailing: Text("${vehicle[index]['wheels']} wheeler"),
