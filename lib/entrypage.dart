@@ -12,15 +12,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentTab = 0;
-  late TabController _tabController;
-  List<Widget> screenLists = [
-    homePage(),
-    myOrder(),
-    myWallet(),
-    myAccount(),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -28,6 +19,15 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int currentTab = 0;
+    bool isClicked = false;
+    late TabController _tabController;
+    List<Widget> screenLists = [
+      HomePage(),
+      myOrder(),
+      myWallet(),
+      myAccount(),
+    ];
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
