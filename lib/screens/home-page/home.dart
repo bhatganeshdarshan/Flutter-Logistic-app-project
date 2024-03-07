@@ -156,10 +156,11 @@ class _HomePageState extends State<HomePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        const Icon(
-                                          Icons.electric_scooter_rounded,
-                                          size: 60,
-                                          color: Color(0xFF30b9b2),
+                                         Image.asset(
+                                           'assets/icons/twowheeler.png',
+                                           width: 60,
+                                           height: 60,
+
                                         ),
                                         Text(
                                           "${vehicle[index]['wheels']} Wheeler",
@@ -173,6 +174,7 @@ class _HomePageState extends State<HomePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
+
                                         Text(
                                           "${vehicle[index]['vehicle_name']}",
                                           style: GoogleFonts.poppins(

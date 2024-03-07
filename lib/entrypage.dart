@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logisticapp/screens/account-page/account.dart';
+import 'package:logisticapp/screens/home-page/app_style.dart';
 import 'package:logisticapp/screens/home-page/home.dart';
 import 'package:logisticapp/screens/order-page/order.dart';
 import 'package:logisticapp/screens/payment-page/wallet_screen.dart';
@@ -46,6 +47,9 @@ class _MainScreenState extends State<MainScreen>
               icon: const Icon(Icons.arrow_back),
               color: Colors.white,
             ),
+            title: Text('EasyLogistics',style: appStyle(20,Colors.white,FontWeight.w600),),
+
+
             actions: <Widget>[
               IconButton(
                 onPressed: () {},
@@ -59,7 +63,8 @@ class _MainScreenState extends State<MainScreen>
               ),
             ],
             bottom: TabBar(
-              padding: const EdgeInsets.only(bottom: 25),
+              tabAlignment: TabAlignment.center,
+              padding: const EdgeInsets.only(bottom: 20),
               dividerColor: Colors.transparent,
               controller: _tabController,
               indicatorColor: Colors.white,
@@ -72,27 +77,43 @@ class _MainScreenState extends State<MainScreen>
               },
               tabs: [
                 Tab(
-                  child: Text(
-                    "Home",
-                    style: TextStyle(fontSize: (currentTab == 0) ? 32 : 16),
+                  child: Row(
+                    children: [Icon(Icons.home,size:(currentTab == 0) ? 24 : 20 ,),SizedBox(width: 8,),
+                      Text(
+                        "Home",
+                        style: TextStyle(fontSize: (currentTab == 0) ? 20 : 16),
+                      ),
+                    ],
                   ),
                 ),
                 Tab(
-                  child: Text(
-                    "Orders",
-                    style: TextStyle(fontSize: (currentTab == 1) ? 32 : 16),
+                  child: Row(
+                    children: [Icon(Icons.delivery_dining_rounded,size:(currentTab == 1) ? 24 : 20 ,),SizedBox(width: 8,),
+                      Text(
+                        "Orders",
+                        style: TextStyle(fontSize: (currentTab == 1) ? 20 : 16),
+                      ),
+                    ],
                   ),
                 ),
                 Tab(
-                  child: Text(
-                    "Wallet",
-                    style: TextStyle(fontSize: (currentTab == 2) ? 32 : 16),
+                  child: Row(
+                    children: [Icon(Icons.wallet_rounded,size:(currentTab == 2) ? 24 : 20 ,),SizedBox(width: 8,),
+                      Text(
+                        "Wallet",
+                        style: TextStyle(fontSize: (currentTab == 2) ? 20 : 16),
+                      ),
+                    ],
                   ),
                 ),
                 Tab(
-                  child: Text(
-                    "Account",
-                    style: TextStyle(fontSize: (currentTab == 3) ? 32 : 16),
+                  child: Row(
+                    children: [Icon(Icons.person,size:(currentTab == 3) ? 24 : 20 ,),SizedBox(width: 8,),
+                      Text(
+                        "Account",
+                        style: TextStyle(fontSize: (currentTab == 3) ? 20 : 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
