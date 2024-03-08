@@ -7,8 +7,7 @@ import 'package:logisticapp/screens/payment-page/wallet_screen.dart';
 import 'package:logisticapp/utils/app_colors.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({super.key, this.loadPageindex});
-  int? loadPageindex;
+  MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -18,24 +17,13 @@ class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int currentTab = 0;
-  // List<Widget> mainScreenPages = [
-  //   const HomePage(),
-  //   const OrderPage(),
-  //   myWallet(),
-  //   const MyAccount(),
-  // ];
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {
       setState(() {
-        // currentTab = _tabController.index;
-        if (widget.loadPageindex != null) {
-          _tabController.index = widget.loadPageindex!;
-        } else {
-          currentTab = _tabController.index;
-        }
+        currentTab = _tabController.index;
       });
     });
   }

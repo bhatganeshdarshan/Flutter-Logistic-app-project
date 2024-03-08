@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/entrypage.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
-import 'package:logisticapp/screens/account-page/account.dart';
 import 'package:logisticapp/utils/app_colors.dart';
 
 final TextEditingController firstNameController = TextEditingController();
@@ -68,22 +67,18 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 children: [
                   Customtextfield(
-                    labelText: (user[0]['first_name'] == null)
-                        ? 'Enter your First name'
-                        : '${user[0]['first_name']}',
+                    labelText: 'Enter First Name',
                     hintText: 'eg: John',
-                    isEnabled: (user[0]['first_name'] == null) ? false : true,
+                    isEnabled: false,
                     isFirstName: true,
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   Customtextfield(
-                    labelText: (user[0]['last_name'] == null)
-                        ? 'Enter your Last name'
-                        : '${user[0]['last_name']}',
+                    labelText: 'Enter Last Name',
                     hintText: 'eg: Cena',
-                    isEnabled: (user[0]['last_name'] == null) ? false : true,
+                    isEnabled: false,
                     isFirstName: false,
                   ),
                   const SizedBox(
