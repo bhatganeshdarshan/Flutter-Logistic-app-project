@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 26, horizontal: 20),
                       // color: Colors.amber,
-                      height: 220,
+                      height: 180,
                       width: double.infinity,
                       child: Card(
                         elevation: 4,

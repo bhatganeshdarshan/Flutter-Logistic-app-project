@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen>
       length: 4,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(140),
+          preferredSize: const Size.fromHeight(130),
           child: AppBar(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),

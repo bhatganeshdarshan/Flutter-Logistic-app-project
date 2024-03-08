@@ -86,7 +86,7 @@ flutter:
     - assets/images/profile.jpg
     - assets/images/icons8-location.gif
     - assets/anime/
-    - assets/icons/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
