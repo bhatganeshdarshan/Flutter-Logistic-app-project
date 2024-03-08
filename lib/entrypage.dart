@@ -4,6 +4,7 @@ import 'package:logisticapp/screens/home-page/app_style.dart';
 import 'package:logisticapp/screens/home-page/home.dart';
 import 'package:logisticapp/screens/order-page/order.dart';
 import 'package:logisticapp/screens/payment-page/wallet_screen.dart';
+import 'package:logisticapp/utils/app_colors.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -39,9 +40,9 @@ class _MainScreenState extends State<MainScreen>
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
             ),
-            shadowColor: const Color(0xFF30b9b2),
+            shadowColor: ApplicationColors.mainThemeBlue,
             elevation: 8,
-            backgroundColor: const Color(0xFF30b9b2),
+            backgroundColor: ApplicationColors.mainThemeBlue,
             leading: IconButton(
               onPressed: () {},
               icon: const Icon(Icons.arrow_back),

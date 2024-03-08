@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
+// import 'package:logisticapp/screens/account-page/edit_profile.dart';
+import 'package:logisticapp/screens/profile-edit-page/edit_profile.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -67,7 +69,13 @@ class _MyAccountState extends State<MyAccount> {
                                 fontSize: 18, color: Colors.grey),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return EditProfile();
+                                },
+                              ));
+                            },
                             icon: const Icon(
                               Icons.edit,
                               color: Colors.grey,
@@ -90,7 +98,13 @@ class _MyAccountState extends State<MyAccount> {
                                 fontSize: 18, color: Colors.grey),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return EditProfile();
+                                },
+                              ));
+                            },
                             icon: const Icon(
                               Icons.edit,
                               color: Colors.grey,

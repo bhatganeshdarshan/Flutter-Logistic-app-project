@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
+import 'package:logisticapp/utils/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   const Icon(
                                     Icons.gps_fixed,
-                                    color: Color(0xFF30b9b2),
+                                    color: ApplicationColors.mainThemeBlue,
                                   ),
                                   Text(
                                     "Enter Pickup Location",
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                                       onPressed: () {},
                                       icon: const Icon(
                                         Icons.add,
-                                        color: Color(0xFF30b9b2),
+                                        color: ApplicationColors.mainThemeBlue,
                                         size: 30,
                                       )),
                                 ],
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   const Icon(
                                     Icons.gps_not_fixed_outlined,
-                                    color: Color(0xFF30b9b2),
+                                    color: ApplicationColors.mainThemeBlue,
                                   ),
                                   Text(
                                     "Enter Drop Location    ",
@@ -103,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                                       onPressed: () {},
                                       icon: const Icon(
                                         Icons.add,
-                                        color: Color(0xFF30b9b2),
+                                        color: ApplicationColors.mainThemeBlue,
                                         size: 30,
                                       )),
                                 ],
@@ -115,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Expanded(
                       child: ListView.builder(
+                        padding: const EdgeInsets.only(bottom: 30),
                         itemCount: vehicle.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -126,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(12),
                                 side: BorderSide(
                                   color: (isClicked && clickedCard == index)
-                                      ? const Color(0xFF30b9b2)
+                                      ? ApplicationColors.mainThemeBlue
                                       : Colors.transparent,
                                   width: 3,
                                 ),
