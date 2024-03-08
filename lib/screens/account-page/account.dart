@@ -112,7 +112,36 @@ class _MyAccountState extends State<MyAccount> {
                             tooltip: "Enter Last name",
                           ),
                         ],
+                      ),
+                const SizedBox(
+                  height: 20,
+                ),
+                (user[0]['first_name'] != null || user[0]['last_name'] != null)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Update Your Profile",
+                            style: GoogleFonts.poppins(
+                                fontSize: 18, color: Colors.grey),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return EditProfile();
+                                },
+                              ));
+                            },
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                            ),
+                            tooltip: "Enter Last name",
+                          ),
+                        ],
                       )
+                    : SizedBox(),
               ],
             ),
           )

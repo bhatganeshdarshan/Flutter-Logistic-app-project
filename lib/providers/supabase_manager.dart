@@ -22,3 +22,18 @@ class SupabaseUserManager {
     }
   }
 }
+
+class SupabaseUpdateProfile {
+  Future updateData(String firstName, String lastName) async {
+    try {
+      await Supabase.instance.client
+          .from('users')
+          .update({'first_name': firstName}).match({'id': userId});
+      await Supabase.instance.client
+          .from('users')
+          .update({'last_name': lastName}).match({'id': userId});
+    } catch (e) {
+      print("error while updating data : ${e}");
+    }
+  }
+}
