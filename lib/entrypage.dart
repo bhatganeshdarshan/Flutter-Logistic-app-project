@@ -47,9 +47,10 @@ class _MainScreenState extends State<MainScreen>
               icon: const Icon(Icons.arrow_back),
               color: Colors.white,
             ),
-            title: Text('EasyLogistics',style: appStyle(20,Colors.white,FontWeight.w600),),
-
-
+            title: Text(
+              'EasyLogistics',
+              style: appStyle(20, Colors.white, FontWeight.w600),
+            ),
             actions: <Widget>[
               IconButton(
                 onPressed: () {},
@@ -78,7 +79,14 @@ class _MainScreenState extends State<MainScreen>
               tabs: [
                 Tab(
                   child: Row(
-                    children: [Icon(Icons.home,size:(currentTab == 0) ? 24 : 20 ,),SizedBox(width: 8,),
+                    children: [
+                      Icon(
+                        Icons.home,
+                        size: (currentTab == 0) ? 24 : 20,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
                       Text(
                         "Home",
                         style: TextStyle(fontSize: (currentTab == 0) ? 20 : 16),
@@ -88,7 +96,14 @@ class _MainScreenState extends State<MainScreen>
                 ),
                 Tab(
                   child: Row(
-                    children: [Icon(Icons.delivery_dining_rounded,size:(currentTab == 1) ? 24 : 20 ,),SizedBox(width: 8,),
+                    children: [
+                      Icon(
+                        Icons.delivery_dining_rounded,
+                        size: (currentTab == 1) ? 24 : 20,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
                       Text(
                         "Orders",
                         style: TextStyle(fontSize: (currentTab == 1) ? 20 : 16),
@@ -98,7 +113,14 @@ class _MainScreenState extends State<MainScreen>
                 ),
                 Tab(
                   child: Row(
-                    children: [Icon(Icons.wallet_rounded,size:(currentTab == 2) ? 24 : 20 ,),SizedBox(width: 8,),
+                    children: [
+                      Icon(
+                        Icons.wallet_rounded,
+                        size: (currentTab == 2) ? 24 : 20,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
                       Text(
                         "Wallet",
                         style: TextStyle(fontSize: (currentTab == 2) ? 20 : 16),
@@ -108,7 +130,14 @@ class _MainScreenState extends State<MainScreen>
                 ),
                 Tab(
                   child: Row(
-                    children: [Icon(Icons.person,size:(currentTab == 3) ? 24 : 20 ,),SizedBox(width: 8,),
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: (currentTab == 3) ? 24 : 20,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
                       Text(
                         "Account",
                         style: TextStyle(fontSize: (currentTab == 3) ? 20 : 16),
@@ -123,10 +152,10 @@ class _MainScreenState extends State<MainScreen>
         body: TabBarView(
           controller: _tabController,
           children: [
-            HomePage(),
-            OrderPage(),
+            const HomePage(),
+            const OrderPage(),
             myWallet(),
-            MyAccount(),
+            const MyAccount(),
           ],
         ),
       ),

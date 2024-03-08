@@ -156,11 +156,21 @@ class _HomePageState extends State<HomePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                         Image.asset(
-                                           'assets/icons/${vehicle[index]['id']}.png',
-                                           width: 60,
-                                           height: 60,
-
+                                        Image.network(
+                                          '${vehicle[index]['vehicle_img']}',
+                                          width: 60,
+                                          height: 60,
+                                          loadingBuilder: (context, child,
+                                              loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+                                          },
                                         ),
                                         Text(
                                           "${vehicle[index]['wheels']} Wheeler",
@@ -174,7 +184,6 @@ class _HomePageState extends State<HomePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-
                                         Text(
                                           "${vehicle[index]['vehicle_name']}",
                                           style: GoogleFonts.poppins(
