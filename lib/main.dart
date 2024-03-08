@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const MainScreen(),
+      child: const LoginPage(),
     );
   }
 }

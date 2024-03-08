@@ -8,12 +8,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/entrypage.dart';
 import 'package:logisticapp/user_auth/authentication_service.dart';
 import 'package:pinput/pinput.dart';
-
+import 'package:logisticapp/utils/app_constants.dart';
 import '../screens/home-page/home.dart';
 
 Widget otpDetails(BuildContext context, TextEditingController pinController,
     FocusNode focusNode, String phoneController) {
   final _authenticationService = AuthenticationService();
+  late dynamic user;
   const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
   const fillColor = Color.fromRGBO(243, 246, 249, 0);
   const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -124,9 +125,11 @@ Widget otpDetails(BuildContext context, TextEditingController pinController,
                   onPressed: () async {
                     focusNode.unfocus();
                     try {
-                      await _authenticationService.verifyUser(
+                      user = await _authenticationService.verifyUser(
                           otp: pinController.text.toString(),
                           phoneNumber: phoneController);
+                      // print("current logged in user is : ${user.id}");
+                      userId = user.id;
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

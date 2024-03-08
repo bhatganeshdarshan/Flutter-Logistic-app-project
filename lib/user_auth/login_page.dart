@@ -16,16 +16,14 @@ class _LoginPageState extends State<LoginPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              loginBackgroundShape(height, width),
-              const SizedBox(
-                height: 40,
-              ),
-              loginFormDetails(context),
-            ],
-          ),
+        child: Column(
+          children: [
+            loginBackgroundShape(height, width),
+            const SizedBox(
+              height: 40,
+            ),
+            loginFormDetails(context),
+          ],
         ),
       ),
     );
