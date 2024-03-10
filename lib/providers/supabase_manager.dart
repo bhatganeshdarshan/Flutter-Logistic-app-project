@@ -37,3 +37,17 @@ class SupabaseUpdateProfile {
     }
   }
 }
+
+class SupabaseOrders {
+  Future getOrders() async {
+    try {
+      var response = await Supabase.instance.client
+          .from('orders')
+          .select()
+          .eq('user_id', userId);
+      return response;
+    } catch (e) {
+      print("error occured while getting orders : ${e}");
+    }
+  }
+}
