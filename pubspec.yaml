@@ -91,12 +91,10 @@ flutter:
 
 
 flutter_native_splash:
-  color: "#232323"
-  image: "assets/images/darklogo.png"
+  image: "assets/images/bgless.png"
    
   android_12: 
-    color: "#232323"
-    image: "assets/images/darklogo.png"
+    image: "assets/images/bgless.png"
   android: true
   ios: true
  
