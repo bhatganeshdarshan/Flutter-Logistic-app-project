@@ -43,6 +43,7 @@ class _MainScreenState extends State<MainScreen>
             shadowColor: ApplicationColors.mainThemeBlue,
             elevation: 8,
             backgroundColor: ApplicationColors.mainThemeBlue,
+            automaticallyImplyLeading: false,
             title: Text(
               'EasyLogistics',
               style: appStyle(20, Colors.white, FontWeight.w600),
