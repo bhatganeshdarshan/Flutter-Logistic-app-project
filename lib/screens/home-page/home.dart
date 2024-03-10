@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Scaffold(
           body: isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(), // Loading indicator
                 )
               : Column(
