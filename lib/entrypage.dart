@@ -43,11 +43,6 @@ class _MainScreenState extends State<MainScreen>
             shadowColor: ApplicationColors.mainThemeBlue,
             elevation: 8,
             backgroundColor: ApplicationColors.mainThemeBlue,
-            leading: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_back),
-              color: Colors.white,
-            ),
             title: Text(
               'EasyLogistics',
               style: appStyle(20, Colors.white, FontWeight.w600),
