@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(bottom: 30),
                         itemCount: vehicle.length,
                         itemBuilder: (context, index) {
-                          return Container(
+                          return SizedBox(
                             // color: Colors.red,
                             height: 180,
                             width: double.infinity,

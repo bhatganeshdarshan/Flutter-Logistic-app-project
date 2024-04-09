@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
-          // You can use the library anywhere in the app even in theme
           theme: ThemeData(
               scaffoldBackgroundColor: kOffWhite,
               iconTheme: const IconThemeData(color: kDark),

@@ -30,7 +30,6 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("tab controller value : ${_tabController.index}");
     return DefaultTabController(
       length: 4,
       child: Scaffold(
