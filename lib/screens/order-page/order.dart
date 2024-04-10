@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/constants/constants.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
@@ -95,31 +99,67 @@ class _OrderPageState extends State<OrderPage> {
               // );
               List<String> dateTime = orders[index]['ordered_at'].split("T");
               return Card(
-                elevation: 6,
+                elevation: 3,
                 margin: const EdgeInsets.only(left: 28, right: 28, bottom: 28),
                 color: Colors.white,
-                child: SizedBox(
-                  width: width,
-                  height: 150,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: SizedBox(
+                    width: width,
+                    height: 140,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                "${dateTime[0]} ${dateTime[1]}",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black45,
+                                ),
+                              ),
+                            ),
+                            (orders[index]['is_delivered'] == true)
+                                ? Text(
+                                    "Delivered",
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text("Pending",
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.amber,
+                                    )),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "₹ ${orders[index]['amount']}",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${dateTime[0]} ${dateTime[1]}"),
-                            (orders[index]['is_delivered'] == true)
-                                ? Text("Delivered")
-                                : Text("Pending")
-                          ]),
-                      Text("₹${orders[index]['amount']}"),
-                      // Text(orders[index]['item_name'])
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(orders[index]['item_name']),
-                          ElevatedButton(
+                            Flexible(
+                              child: Text(
+                                "${orders[index]['item_name']}",
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(Colors
@@ -140,14 +180,20 @@ class _OrderPageState extends State<OrderPage> {
                                     "View More",
                                     style: GoogleFonts.poppins(
                                       color: Colors.black54,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Icon(Icons.arrow_forward),
+                                  const Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.black,
+                                  ),
                                 ],
-                              ))
-                        ],
-                      )
-                    ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );
