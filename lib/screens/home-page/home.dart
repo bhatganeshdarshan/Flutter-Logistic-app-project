@@ -1,7 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
+import 'package:logisticapp/map/track_order.dart';
 import 'package:logisticapp/utils/app_colors.dart';
+import 'package:provider/provider.dart';
+
+import '../../map/app_info.dart';
+import '../../map/search_place_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
     readData();
     super.initState();
   }
@@ -29,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     });
     // print(vehicle);
   }
+  bool openNavigationDrawer=true;
 
   @override
   Widget build(BuildContext context) {
@@ -59,20 +70,32 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  const Icon(
-                                    Icons.gps_fixed,
-                                    color: ApplicationColors.mainThemeBlue,
-                                  ),
-                                  Text(
-                                    "Enter Pickup Location",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey[700],
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: const Icon(
+                                      Icons.gps_fixed,
+                                      color: ApplicationColors.mainThemeBlue,
                                     ),
                                   ),
+                                   Expanded(
+                                     child: Text(
+                                       Provider.of<AppInfo>(context).userPickUpLocation !=null ?
+                                       Provider.of<AppInfo>(context).userPickUpLocation!.locationName!
+                                           :"Enter Pickup Location",
+                                         overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                   ),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: ()  {
+                                        Navigator.push(
+                                             context,
+                                           MaterialPageRoute(builder: (context) => TrackOrder()),
+                                          );},
                                       icon: const Icon(
                                         Icons.add,
                                         color: ApplicationColors.mainThemeBlue,
@@ -88,20 +111,35 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  const Icon(
-                                    Icons.gps_not_fixed_outlined,
-                                    color: ApplicationColors.mainThemeBlue,
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: const Icon(
+                                      Icons.gps_not_fixed_outlined,
+                                      color: ApplicationColors.mainThemeBlue,
+                                    ),
                                   ),
-                                  Text(
-                                    "Enter Drop Location    ",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey[700],
+                                  Expanded(
+                                    child: Text(
+                                      Provider.of<AppInfo>(context).userDropOffLocation !=null ?
+                                      Provider.of<AppInfo>(context).userDropOffLocation!.locationName!
+                                          :"Enter Drop Location",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
                                   ),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        var responseFromSearchScreen =await Navigator.push(context, MaterialPageRoute(builder: (c)=>SearchPlacesScreen()));
+                                        if(responseFromSearchScreen=="obtainedDropoff"){
+                                          setState(() {
+                                            openNavigationDrawer=false;
+                                          });
+                                        }
+                                      },
                                       icon: const Icon(
                                         Icons.add,
                                         color: ApplicationColors.mainThemeBlue,

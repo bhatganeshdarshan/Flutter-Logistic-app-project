@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:logisticapp/screens/payment-page/payment.dart';
+num order=5;
 Widget myWallet() {
-  return const Center(
-    child: Text('wallet Page'),
+  return  Center(
+    child: payment(order: order,),
   );
 }

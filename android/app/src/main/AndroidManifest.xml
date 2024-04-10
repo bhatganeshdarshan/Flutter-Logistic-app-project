@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
         android:label="logisticapp"
         android:name="${applicationName}"
@@ -30,10 +31,13 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2" />
+            android:value="2"
+        />
         <meta-data
               android:name="com.google.android.geo.API_KEY"
-              android:value="AIzaSyCemOhqkOMkdSrz17sSmI0AvyxYQDM93EY"
-        />
+            android:value="AIzaSyAIvOQ5TMxm9IdWuZeipj4OyASsOyiKLTo"/>
+<!--     android:value="AIzaSyCemOhqkOMkdSrz17sSmI0AvyxYQDM93EY"-->
+
+
     </application>
 </manifest>

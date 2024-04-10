@@ -1,11 +1,18 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logisticapp/constants/constants.dart';
 import 'package:logisticapp/entrypage.dart';
+import 'package:logisticapp/map/app_info.dart';
+
+
+import 'package:logisticapp/map/track_order.dart';
 import 'package:logisticapp/screens/available_vehicles_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:logisticapp/user_auth/login_page.dart';
 import 'package:logisticapp/utils/app_constants.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +32,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp(
+        return ChangeNotifierProvider(create: (context) => AppInfo(),
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
           theme: ThemeData(
@@ -33,9 +41,10 @@ class MyApp extends StatelessWidget {
               iconTheme: const IconThemeData(color: kDark),
               primarySwatch: Colors.grey),
           home: child,
+        ),
         );
       },
-      child: LoginPage(),
+      child: MainScreen(),
     );
   }
 }
