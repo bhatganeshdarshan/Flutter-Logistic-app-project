@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:logisticapp/global.dart';
 import 'package:logisticapp/map/change_pickup_location.dart';
+
 import 'package:logisticapp/map/methods.dart';
 import 'package:logisticapp/map/search_place_screen.dart';
 import 'package:logisticapp/utils/app_colors.dart';
@@ -13,8 +14,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
@@ -206,7 +206,7 @@ class _TrackOrderState extends State<TrackOrder> {
     );
 
     Marker destinationMarker = Marker(
-      markerId: const MarkerId("destinationId"),
+      markerId: MarkerId("destinationId"),
       infoWindow: InfoWindow(
           title: destinationPosition.locationName, snippet: "Destination"),
       position: destinationLatlag,
@@ -218,7 +218,7 @@ class _TrackOrderState extends State<TrackOrder> {
       markerSet.add(destinationMarker);
     });
     Circle originCircle = Circle(
-      circleId: const CircleId("OriginID"),
+      circleId: CircleId("OriginID"),
       fillColor: Colors.green,
       radius: 12,
       strokeColor: Colors.white,
@@ -226,7 +226,7 @@ class _TrackOrderState extends State<TrackOrder> {
       center: originLatlng,
     );
     Circle destinationCircle = Circle(
-      circleId: const CircleId("destinationId"),
+      circleId: CircleId("destinationId"),
       fillColor: Colors.red,
       radius: 12,
       strokeColor: Colors.white,
@@ -276,17 +276,17 @@ class _TrackOrderState extends State<TrackOrder> {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: ApplicationColors.mainThemeBlue,
+            backgroundColor: Colors.cyan,
             leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
               ),
             ),
-            title: const Text(
+            title: Text(
               "Search location",
               style: TextStyle(color: Colors.white),
             ),
@@ -439,12 +439,11 @@ class _TrackOrderState extends State<TrackOrder> {
                                         },
                                         child: Row(
                                           children: [
-                                            const Icon(
+                                            Icon(
                                               Icons.location_on_outlined,
-                                              color: ApplicationColors
-                                                  .mainThemeBlue,
+                                              color: Colors.cyan,
                                             ),
-                                            const SizedBox(
+                                            SizedBox(
                                               width: 10,
                                             ),
                                             Expanded(
@@ -452,11 +451,10 @@ class _TrackOrderState extends State<TrackOrder> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  const Text(
+                                                  Text(
                                                     "To",
                                                     style: TextStyle(
-                                                      color: ApplicationColors
-                                                          .mainThemeBlue,
+                                                      color: Colors.cyan,
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -472,7 +470,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                                             .userDropOffLocation!
                                                             .locationName!
                                                         : "Where to ?",
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                         color: Colors.black45,
                                                         fontSize: 14),
                                                   )
@@ -486,7 +484,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 height: 5,
                               ),
                               Row(
@@ -498,21 +496,20 @@ class _TrackOrderState extends State<TrackOrder> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (c) =>
-                                                  const PrecisePickUpScreen()));
+                                                  PrecisePickUpScreen()));
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            ApplicationColors.mainThemeBlue,
-                                        textStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        )),
-                                    child: const Text(
+                                    child: Text(
                                       "Locate on the Map",
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
                                     ),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.cyan,
+                                        textStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        )),
                                   )
                                 ],
                               ),
