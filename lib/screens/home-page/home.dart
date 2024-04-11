@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -281,7 +278,7 @@ class _HomePageState extends State<HomePage>
                       Provider.of<AppInfo>(context).userDropOffLocation != null)
                   ? BottomSheet(
                       animationController: _animationController,
-                      elevation: 5,
+                      elevation: 10,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       shadowColor: Colors.black,
@@ -333,14 +330,9 @@ class _HomePageState extends State<HomePage>
                                         onTap: () {
                                           print("clicked");
                                         },
-                                        child: Container(
+                                        child: SizedBox(
                                           width: width - 30,
                                           height: 45,
-                                          // color: ApplicationColors.mainThemeBlue,
-                                          // decoration: BoxDecoration(
-                                          //   color: ApplicationColors.mainThemeBlue,
-                                          //   borderRadius: BorderRadius.circular(12),
-                                          // ),
                                           child: Center(
                                             child: Text(
                                               "Next",
