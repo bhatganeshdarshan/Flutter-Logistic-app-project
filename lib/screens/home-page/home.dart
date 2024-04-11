@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logisticapp/constants/constants.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
 import 'package:logisticapp/map/track_order.dart';
 import 'package:logisticapp/utils/app_colors.dart';
@@ -18,18 +20,20 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   int? clickedCard;
   bool isClicked = false;
   bool isLoading = true;
   final vehicleData = SupabaseManager();
   late dynamic vehicle;
+  late AnimationController _animationController;
 
   @override
   void initState() {
-
     readData();
     super.initState();
+    _animationController = AnimationController(vsync: this);
   }
 
   readData() async {
@@ -39,7 +43,8 @@ class _HomePageState extends State<HomePage> {
     });
     // print(vehicle);
   }
-  bool openNavigationDrawer=true;
+
+  bool openNavigationDrawer = true;
 
   @override
   Widget build(BuildContext context) {
@@ -70,32 +75,39 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: const Icon(
+                                  const Padding(
+                                    padding: EdgeInsets.all(20.0),
+                                    child: Icon(
                                       Icons.gps_fixed,
                                       color: ApplicationColors.mainThemeBlue,
                                     ),
                                   ),
-                                   Expanded(
-                                     child: Text(
-                                       Provider.of<AppInfo>(context).userPickUpLocation !=null ?
-                                       Provider.of<AppInfo>(context).userPickUpLocation!.locationName!
-                                           :"Enter Pickup Location",
-                                         overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey[700],
-                                        ),
+                                  Expanded(
+                                    child: Text(
+                                      Provider.of<AppInfo>(context)
+                                                  .userPickUpLocation !=
+                                              null
+                                          ? Provider.of<AppInfo>(context)
+                                              .userPickUpLocation!
+                                              .locationName!
+                                          : "Enter Pickup Location",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[700],
                                       ),
-                                   ),
+                                    ),
+                                  ),
                                   IconButton(
-                                      onPressed: ()  {
+                                      onPressed: () {
                                         Navigator.push(
-                                             context,
-                                           MaterialPageRoute(builder: (context) => TrackOrder()),
-                                          );},
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TrackOrder()),
+                                        );
+                                      },
                                       icon: const Icon(
                                         Icons.add,
                                         color: ApplicationColors.mainThemeBlue,
@@ -111,18 +123,22 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: const Icon(
+                                  const Padding(
+                                    padding: EdgeInsets.all(20.0),
+                                    child: Icon(
                                       Icons.gps_not_fixed_outlined,
                                       color: ApplicationColors.mainThemeBlue,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      Provider.of<AppInfo>(context).userDropOffLocation !=null ?
-                                      Provider.of<AppInfo>(context).userDropOffLocation!.locationName!
-                                          :"Enter Drop Location",
+                                      Provider.of<AppInfo>(context)
+                                                  .userDropOffLocation !=
+                                              null
+                                          ? Provider.of<AppInfo>(context)
+                                              .userDropOffLocation!
+                                              .locationName!
+                                          : "Enter Drop Location",
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.poppins(
                                         fontSize: 18,
@@ -133,10 +149,16 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   IconButton(
                                       onPressed: () async {
-                                        var responseFromSearchScreen =await Navigator.push(context, MaterialPageRoute(builder: (c)=>SearchPlacesScreen()));
-                                        if(responseFromSearchScreen=="obtainedDropoff"){
+                                        var responseFromSearchScreen =
+                                            await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (c) =>
+                                                        const SearchPlacesScreen()));
+                                        if (responseFromSearchScreen ==
+                                            "obtainedDropoff") {
                                           setState(() {
-                                            openNavigationDrawer=false;
+                                            openNavigationDrawer = false;
                                           });
                                         }
                                       },
@@ -251,14 +273,97 @@ class _HomePageState extends State<HomePage> {
                 ),
         ),
         Positioned(
-          bottom: 20,
-          right: 20,
+          bottom: -10,
+          right: 0,
+          left: 0,
           child: isClicked
-              ? FloatingActionButton(
-                  onPressed: () {},
-                  child: const Icon(Icons.forward),
-                )
-              : SizedBox(),
+              ? (Provider.of<AppInfo>(context).userPickUpLocation != null &&
+                      Provider.of<AppInfo>(context).userDropOffLocation != null)
+                  ? BottomSheet(
+                      animationController: _animationController,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      shadowColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      onClosing: () {},
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 150,
+                          child: Center(
+                            // child: ElevatedButton(
+                            //     onPressed: () {}, child: const Text("Next")),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        "Total",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black87,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      Text(
+                                        "₹123.00",
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 26),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        color: ApplicationColors.mainThemeBlue,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: InkWell(
+                                        onTap: () {
+                                          print("clicked");
+                                        },
+                                        child: Container(
+                                          width: width - 30,
+                                          height: 45,
+                                          // color: ApplicationColors.mainThemeBlue,
+                                          // decoration: BoxDecoration(
+                                          //   color: ApplicationColors.mainThemeBlue,
+                                          //   borderRadius: BorderRadius.circular(12),
+                                          // ),
+                                          child: Center(
+                                            child: Text(
+                                              "Next",
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                  : FloatingActionButton(
+                      onPressed: () {},
+                      child: const Icon(Icons.location_off),
+                    )
+              : const SizedBox(),
         )
       ],
     );
