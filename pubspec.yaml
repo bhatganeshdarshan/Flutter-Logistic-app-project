@@ -96,13 +96,16 @@ flutter:
     - assets/images/icons8-location.gif
     - assets/anime/
     - assets/images/pickup.png
+    - assets/images/splashscreen.gif
 
 
 flutter_native_splash:
-  image: "assets/images/bgless.png"
-   
-  android_12: 
-    image: "assets/images/bgless.png"
+  color: "#FFFFFF"
+  image: "assets/images/splashscreen.gif"
+
+  android_12:
+    color: "#FFFFFF"
+    image: "assets/images/splashscreen.gif"
   android: true
   ios: true
  
