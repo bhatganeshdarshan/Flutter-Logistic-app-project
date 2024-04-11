@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:logisticapp/global.dart';
 import 'package:logisticapp/map/change_pickup_location.dart';
+
 import 'package:logisticapp/map/methods.dart';
 import 'package:logisticapp/map/search_place_screen.dart';
 import 'package:logisticapp/widgets/progress_dialog.dart';
@@ -15,14 +16,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
 
 import 'app_info.dart';
-import 'direction.dart';
+
 
 
 class TrackOrder extends StatefulWidget {
@@ -198,6 +198,7 @@ class _TrackOrderState extends State<TrackOrder> {
        infoWindow: InfoWindow(title: destinationPosition.locationName,snippet: "Destination"),
        position: destinationLatlag,
        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+
      );
      
      
@@ -286,6 +287,7 @@ class _TrackOrderState extends State<TrackOrder> {
                elevation: 0.0,
              ),
       body: Stack(
+        alignment: Alignment.center,
       children: [
 
         GoogleMap(
@@ -323,7 +325,9 @@ class _TrackOrderState extends State<TrackOrder> {
           //
           // },
 
-        ),
+          ),
+        
+
         // Align(
         //   alignment: Alignment.center,
         //   child: Padding(
@@ -471,7 +475,33 @@ class _TrackOrderState extends State<TrackOrder> {
               ],
             ),
           )
-        )
+        ),
+        if(tripDirectionDetailsInfo !=null)
+          Positioned(
+              top: 20.0,child: Container(padding: EdgeInsets.symmetric(
+            vertical: 6.0,
+            horizontal: 12.0,
+          ),
+            decoration: BoxDecoration(
+                color: Colors.cyan,
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: const[
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 6.0,
+                  )
+                ]
+            ),
+            child: Text('${tripDirectionDetailsInfo
+                ?.distance_text},${tripDirectionDetailsInfo?.duration_text}',
+              style: TextStyle(
+                fontSize: 18.0,color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),),
+          )
+          )
+
 
         // Positioned(
         //   top: 40,

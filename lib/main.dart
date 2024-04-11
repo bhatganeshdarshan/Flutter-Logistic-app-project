@@ -5,6 +5,7 @@ import 'package:logisticapp/map/app_info.dart';
 
 
 import 'package:logisticapp/map/track_order.dart';
+import 'package:logisticapp/screens/account-page/profile.dart';
 import 'package:logisticapp/screens/available_vehicles_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         ),
         );
       },
-      child: MainScreen(),
+      child: TrackOrder(),
     );
   }
 }
