@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-
 class ProfileScreenDisplay extends StatelessWidget {
   const ProfileScreenDisplay({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return   Scaffold(
-      
+    return Scaffold(
       body: ListView(
         padding: EdgeInsets.all(20.0),
         children: [

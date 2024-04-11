@@ -1,7 +1,4 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:logisticapp/global.dart';
 import 'package:logisticapp/map/change_pickup_location.dart';
@@ -20,10 +17,9 @@ import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
 
 import 'app_info.dart';
-import 'direction.dart';
 
 class TrackOrder extends StatefulWidget {
-  TrackOrder({Key? key}) : super(key: key);
+  const TrackOrder({super.key});
 
   @override
   State<TrackOrder> createState() => _TrackOrderState();
@@ -152,16 +148,16 @@ class _TrackOrderState extends State<TrackOrder> {
 
     pLineCoordinatedList.clear();
     if (decodePolyLinePointsResultList.isNotEmpty) {
-      decodePolyLinePointsResultList.forEach((PointLatLng pointLatLng) {
+      for (var pointLatLng in decodePolyLinePointsResultList) {
         pLineCoordinatedList
             .add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
-      });
+      }
     }
 
     polylineSet.clear();
     setState(() {
       Polyline polyline = Polyline(
-        color: Colors.blue,
+        color: ApplicationColors.mainThemeBlue,
         polylineId: const PolylineId("Polyline"),
         jointType: JointType.round,
         points: pLineCoordinatedList,
@@ -206,7 +202,7 @@ class _TrackOrderState extends State<TrackOrder> {
     );
 
     Marker destinationMarker = Marker(
-      markerId: MarkerId("destinationId"),
+      markerId: const MarkerId("destinationId"),
       infoWindow: InfoWindow(
           title: destinationPosition.locationName, snippet: "Destination"),
       position: destinationLatlag,
@@ -218,7 +214,7 @@ class _TrackOrderState extends State<TrackOrder> {
       markerSet.add(destinationMarker);
     });
     Circle originCircle = Circle(
-      circleId: CircleId("OriginID"),
+      circleId: const CircleId("OriginID"),
       fillColor: Colors.green,
       radius: 12,
       strokeColor: Colors.white,
@@ -226,7 +222,7 @@ class _TrackOrderState extends State<TrackOrder> {
       center: originLatlng,
     );
     Circle destinationCircle = Circle(
-      circleId: CircleId("destinationId"),
+      circleId: const CircleId("destinationId"),
       fillColor: Colors.red,
       radius: 12,
       strokeColor: Colors.white,
@@ -276,23 +272,24 @@ class _TrackOrderState extends State<TrackOrder> {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.cyan,
+            backgroundColor: ApplicationColors.mainThemeBlue,
             leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
               ),
             ),
-            title: Text(
+            title: const Text(
               "Search location",
               style: TextStyle(color: Colors.white),
             ),
             elevation: 0.0,
           ),
           body: Stack(
+            alignment: Alignment.center,
             children: [
               GoogleMap(
                 padding: EdgeInsets.only(top: 100, bottom: bottomPaddingOfMap),
@@ -328,6 +325,7 @@ class _TrackOrderState extends State<TrackOrder> {
                 //
                 // },
               ),
+
               // Align(
               //   alignment: Alignment.center,
               //   child: Padding(
@@ -439,11 +437,12 @@ class _TrackOrderState extends State<TrackOrder> {
                                         },
                                         child: Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.location_on_outlined,
-                                              color: Colors.cyan,
+                                              color: ApplicationColors
+                                                  .mainThemeBlue,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
                                             Expanded(
@@ -451,10 +450,11 @@ class _TrackOrderState extends State<TrackOrder> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     "To",
                                                     style: TextStyle(
-                                                      color: Colors.cyan,
+                                                      color: ApplicationColors
+                                                          .mainThemeBlue,
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -470,7 +470,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                                             .userDropOffLocation!
                                                             .locationName!
                                                         : "Where to ?",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: Colors.black45,
                                                         fontSize: 14),
                                                   )
@@ -484,7 +484,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Row(
@@ -496,20 +496,21 @@ class _TrackOrderState extends State<TrackOrder> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (c) =>
-                                                  PrecisePickUpScreen()));
+                                                  const PrecisePickUpScreen()));
                                     },
-                                    child: Text(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            ApplicationColors.mainThemeBlue,
+                                        textStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        )),
+                                    child: const Text(
                                       "Locate on the Map",
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
                                     ),
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.cyan,
-                                        textStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        )),
                                   )
                                 ],
                               ),
@@ -518,7 +519,34 @@ class _TrackOrderState extends State<TrackOrder> {
                         ),
                       ],
                     ),
-                  ))
+                  )),
+              if (tripDirectionDetailsInfo != null)
+                Positioned(
+                    top: 20.0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 6.0,
+                        horizontal: 12.0,
+                      ),
+                      decoration: BoxDecoration(
+                          color: ApplicationColors.mainThemeBlue,
+                          borderRadius: BorderRadius.circular(20.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              offset: Offset(0, 2),
+                              blurRadius: 6.0,
+                            )
+                          ]),
+                      child: Text(
+                        '${tripDirectionDetailsInfo?.distance_text},${tripDirectionDetailsInfo?.duration_text}',
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ))
 
               // Positioned(
               //   top: 40,
