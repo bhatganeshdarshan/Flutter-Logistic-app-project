@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/constants/constants.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
 import 'package:logisticapp/map/track_order.dart';
+import 'package:logisticapp/screens/order-page/place_order.dart';
 import 'package:logisticapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage>
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  TrackOrder()),
+                                                  const TrackOrder()),
                                         );
                                       },
                                       icon: const Icon(
@@ -329,6 +330,12 @@ class _HomePageState extends State<HomePage>
                                       child: InkWell(
                                         onTap: () {
                                           print("clicked");
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const PlaceOrder(),
+                                              ));
                                         },
                                         child: SizedBox(
                                           width: width - 30,
