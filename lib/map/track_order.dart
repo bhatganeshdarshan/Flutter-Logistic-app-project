@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
-
+import 'package:logisticapp/global.dart';
 import 'app_info.dart';
 
 class TrackOrder extends StatefulWidget {

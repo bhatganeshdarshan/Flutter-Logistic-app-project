@@ -3,8 +3,10 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/constants/constants.dart';
+import 'package:logisticapp/global.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
 import 'package:logisticapp/map/track_order.dart';
+import 'package:logisticapp/screens/calculate-fare/calculate_fare.dart';
 import 'package:logisticapp/screens/order-page/place_order.dart';
 import 'package:logisticapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +28,8 @@ class _HomePageState extends State<HomePage>
   final vehicleData = SupabaseManager();
   late dynamic vehicle;
   late AnimationController _animationController;
-
+  String? tripDistance = tripDirectionDetailsInfo?.distance_text;
+  late double? fare;
   @override
   void initState() {
     readData();
@@ -40,6 +43,7 @@ class _HomePageState extends State<HomePage>
       isLoading = false;
     });
     // print(vehicle);
+    print("distanceeeeeeeeeeeeeeee : $tripDistance");
   }
 
   bool openNavigationDrawer = true;
@@ -199,6 +203,8 @@ class _HomePageState extends State<HomePage>
                                 onTap: () {
                                   setState(() {
                                     // isClicked = !isClicked;
+                                    fare = calculateFare(index);
+                                    print(index);
                                     if (clickedCard == index &&
                                         isClicked == true) {
                                       isClicked = false;
@@ -286,6 +292,7 @@ class _HomePageState extends State<HomePage>
                       backgroundColor: Colors.white,
                       onClosing: () {},
                       builder: (BuildContext context) {
+                        int? fareInt = fare!.toInt();
                         return SizedBox(
                           height: 150,
                           child: Center(
@@ -309,12 +316,14 @@ class _HomePageState extends State<HomePage>
                                       const SizedBox(
                                         width: 30,
                                       ),
-                                      Text(
-                                        "₹123.00",
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 26),
-                                      )
+                                      (fareInt != null)
+                                          ? Text(
+                                              "₹$fareInt",
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 26),
+                                            )
+                                          : const CircularProgressIndicator()
                                     ],
                                   ),
                                   const SizedBox(

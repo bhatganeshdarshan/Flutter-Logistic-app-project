@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logisticapp/screens/account-page/account.dart';
+import 'package:logisticapp/screens/account-page/profile.dart';
 import 'package:logisticapp/screens/home-page/app_style.dart';
 import 'package:logisticapp/screens/home-page/home.dart';
 import 'package:logisticapp/screens/order-page/order.dart';
@@ -151,7 +152,7 @@ class _MainScreenState extends State<MainScreen>
             const HomePage(),
             const OrderPage(),
             myWallet(),
-            const MyAccount(),
+            ProfileScreenDisplay(),
           ],
         ),
       ),
