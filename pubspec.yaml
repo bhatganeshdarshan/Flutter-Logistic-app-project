@@ -97,6 +97,9 @@ flutter:
     - assets/anime/
     - assets/images/pickup.png
     - assets/images/splashscreen.gif
+    - assets/images/close.png
+    - assets/images/master.png
+    - assets/images/next.png
 
 
 flutter_native_splash:

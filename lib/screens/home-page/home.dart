@@ -1,16 +1,20 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logisticapp/constants/constants.dart';
+import 'package:logisticapp/entrypage.dart';
 import 'package:logisticapp/global.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
 import 'package:logisticapp/map/track_order.dart';
 import 'package:logisticapp/screens/calculate-fare/calculate_fare.dart';
 import 'package:logisticapp/screens/order-page/place_order.dart';
 import 'package:logisticapp/utils/app_colors.dart';
+import 'package:logisticapp/widgets/checkout_row.dart';
+import 'package:logisticapp/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
-
 import '../../map/app_info.dart';
 import '../../map/search_place_screen.dart';
 
@@ -25,11 +29,13 @@ class _HomePageState extends State<HomePage>
   int? clickedCard;
   bool isClicked = false;
   bool isLoading = true;
+  int? curIndex;
   final vehicleData = SupabaseManager();
   late dynamic vehicle;
   late AnimationController _animationController;
   String? tripDistance = tripDirectionDetailsInfo?.distance_text;
   late double? fare;
+
   @override
   void initState() {
     readData();
@@ -203,7 +209,7 @@ class _HomePageState extends State<HomePage>
                                 onTap: () {
                                   setState(() {
                                     // isClicked = !isClicked;
-                                    fare = calculateFare(index);
+                                    curIndex = index;
                                     print(index);
                                     if (clickedCard == index &&
                                         isClicked == true) {
@@ -292,74 +298,347 @@ class _HomePageState extends State<HomePage>
                       backgroundColor: Colors.white,
                       onClosing: () {},
                       builder: (BuildContext context) {
+                        fare = calculateFare(curIndex!);
                         int? fareInt = fare!.toInt();
+                        int? taxAmt = (fare! * 0.18).toInt();
+                        // int taxAmt = (fareInt * 0.18) as int;
                         return SizedBox(
-                          height: 150,
+                          height: 500,
                           child: Center(
                             // child: ElevatedButton(
                             //     onPressed: () {}, child: const Text("Next")),
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 16),
+                              padding: const EdgeInsets.all(20.0),
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceAround,
+                                  //   children: [
+                                  //     Text(
+                                  //       "Total",
+                                  //       style: GoogleFonts.poppins(
+                                  //         color: Colors.black87,
+                                  //         fontSize: 16,
+                                  //       ),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       width: 30,
+                                  //     ),
+                                  //     (fareInt != null)
+                                  //         ? Text(
+                                  //             "₹$fareInt",
+                                  //             style: GoogleFonts.poppins(
+                                  //                 fontWeight: FontWeight.bold,
+                                  //                 fontSize: 26),
+                                  //           )
+                                  //         : const CircularProgressIndicator()
+                                  //   ],
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 20,
+                                  // ),
+                                  // Material(
+                                  //   color: Colors.transparent,
+                                  //   child: Ink(
+                                  //     decoration: BoxDecoration(
+                                  //       color: ApplicationColors.mainThemeBlue,
+                                  //       borderRadius: BorderRadius.circular(12),
+                                  //     ),
+                                  //     child: InkWell(
+                                  //       onTap: () {
+                                  //         print("clicked");
+                                  //         Navigator.push(
+                                  //             context,
+                                  //             MaterialPageRoute(
+                                  //               builder: (context) =>
+                                  //                   const PlaceOrder(),
+                                  //             ));
+                                  //       },
+                                  //       child: SizedBox(
+                                  //         width: width - 30,
+                                  //         height: 45,
+                                  //         child: Center(
+                                  //           child: Text(
+                                  //             "Next",
+                                  //             style: GoogleFonts.poppins(
+                                  //                 color: Colors.white,
+                                  //                 fontSize: 16),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "Checkout",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MainScreen()));
+                                          },
+                                          child: Image.asset(
+                                            "assets/images/close.png",
+                                            width: 15,
+                                            height: 15,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Divider(
+                                    color: Colors.black26,
+                                    height: 1,
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(
-                                        "Total",
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.black87,
-                                          fontSize: 16,
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15),
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              "Payment Type",
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            const Spacer(),
+                                            CupertinoSegmentedControl(
+                                                children: const {
+                                                  "1": Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8),
+                                                      child: Text("COD")),
+                                                  "2": Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8),
+                                                      child: Text("Online")),
+                                                },
+                                                selectedColor: Colors.black,
+                                                onValueChanged: (val) {}),
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: 30,
+                                      const Divider(
+                                        color: Colors.black26,
+                                        height: 1,
                                       ),
-                                      (fareInt != null)
-                                          ? Text(
-                                              "₹$fareInt",
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 26),
-                                            )
-                                          : const CircularProgressIndicator()
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Material(
-                                    color: Colors.transparent,
-                                    child: Ink(
-                                      decoration: BoxDecoration(
-                                        color: ApplicationColors.mainThemeBlue,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          print("clicked");
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const PlaceOrder(),
-                                              ));
-                                        },
-                                        child: SizedBox(
-                                          width: width - 30,
-                                          height: 45,
-                                          child: Center(
-                                            child: Text(
-                                              "Next",
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
-                                            ),
+
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 15),
+                                          child: Row(
+                                            children: [
+                                              const Text(
+                                                "Payment",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              const Spacer(),
+                                              Image.asset(
+                                                "assets/images/master.png",
+                                                width: 30,
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              const Text(
+                                                "Select",
+                                                textAlign: TextAlign.end,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Image.asset(
+                                                "assets/images/next.png",
+                                                height: 15,
+                                                color: Colors.black,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
+                                      const Divider(
+                                        color: Colors.black26,
+                                        height: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 15, right: 5),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Row(
+                                            children: [
+                                              const Text(
+                                                "Total",
+                                                style: TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "₹ $fareInt",
+                                                  textAlign: TextAlign.end,
+                                                  style: const TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Row(
+                                            children: [
+                                              const Text(
+                                                "Tax (18% GST)",
+                                                style: TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "₹ $taxAmt",
+                                                  textAlign: TextAlign.end,
+                                                  style: const TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Discount ",
+                                                style: TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "- ₹ 7",
+                                                  textAlign: TextAlign.end,
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                  ),
+                                  CheckoutRow(
+                                    title: "Final Total",
+                                    value: "₹ ${fareInt + taxAmt - 5}",
+                                    onPressed: () {},
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: [
+                                          const TextSpan(
+                                              text:
+                                                  "By continuing you agree to our "),
+                                          TextSpan(
+                                              text: "Terms",
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w500),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  print(
+                                                      "Terms of Service Click");
+                                                }),
+                                          const TextSpan(text: " and "),
+                                          TextSpan(
+                                              text: "Privacy Policy.",
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  print("Privacy Policy Click");
+                                                })
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  RoundButton(
+                                      title: "Place Order", onPressed: () {}),
+                                  const SizedBox(
+                                    height: 15,
                                   ),
                                 ],
                               ),
