@@ -10,6 +10,7 @@ import 'package:logisticapp/global.dart';
 import 'package:logisticapp/providers/supabase_manager.dart';
 import 'package:logisticapp/map/track_order.dart';
 import 'package:logisticapp/screens/calculate-fare/calculate_fare.dart';
+import 'package:logisticapp/screens/home-page/place_order_screen.dart';
 import 'package:logisticapp/screens/order-page/place_order.dart';
 import 'package:logisticapp/utils/app_colors.dart';
 import 'package:logisticapp/widgets/checkout_row.dart';
@@ -636,7 +637,13 @@ class _HomePageState extends State<HomePage>
                                     ),
                                   ),
                                   RoundButton(
-                                      title: "Place Order", onPressed: () {}),
+                                      title: "Place Order", onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) =>
+                                             PlaceOrder()));
+                                  }),
                                   const SizedBox(
                                     height: 15,
                                   ),

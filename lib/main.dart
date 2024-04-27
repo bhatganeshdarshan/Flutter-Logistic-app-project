@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      child: const LoginPage(),
+      child:  MainScreen(),
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:logisticapp/map/active_nearby_driver.dart';
 import 'package:logisticapp/global.dart';
 import 'package:logisticapp/map/change_pickup_location.dart';
+import 'package:logisticapp/map/grofire_assistant.dart';
 
 import 'package:logisticapp/map/methods.dart';
 import 'package:logisticapp/map/search_place_screen.dart';
@@ -91,7 +94,7 @@ class _TrackOrderState extends State<TrackOrder> {
   bool openNavigationDrawer = true;
   bool activeNearByDriverKeysLoaded = false;
 
-  BitmapDescriptor? aciveNearByIcon;
+  BitmapDescriptor? activeNearByIcon;
 
   locateUserPosition() async {
     Position cPosition = await Geolocator.getCurrentPosition(
@@ -115,6 +118,84 @@ class _TrackOrderState extends State<TrackOrder> {
 
     userName = "Ajay Kumar";
     userEmail = "1231231230@gmail.com";
+
+
+    initializedGeoFireListener();
+  }
+  initializedGeoFireListener(){
+    Geofire.initialize("activeDrivers");
+    Geofire.queryAtLocation(userCurrentPosition!.latitude, userCurrentPosition!.longitude, 10)!.listen((map) {
+      print(map);
+      if(map!= null){
+        var callBack =map["callBack"];
+        switch(callBack){
+          //whenever any driver become active/ online
+          case Geofire.onKeyEntered:
+            ActiveNearByAvailableDrivers activeNearByAvailableDrivers=ActiveNearByAvailableDrivers();
+            activeNearByAvailableDrivers.locationLongitude=map["latitude"];
+            activeNearByAvailableDrivers.locationLatitude=map["longitude"];
+            activeNearByAvailableDrivers.driverId=map["key"];
+
+            GeoFireAssistant.activeNearByAvailableDriversList.add(activeNearByAvailableDrivers);
+            if(activeNearByDriverKeysLoaded == true){
+              displayActiveDriverOnUserMap();
+            }
+            break;
+            //Whenever any driver become non-active/online
+          case Geofire.onKeyExited:
+            GeoFireAssistant.deleteOffLineDriverFromList(map["key"]);
+            displayActiveDriverOnUserMap();
+            break;
+           // whenever driver moves -update driver location
+          case Geofire.onKeyMoved:
+            ActiveNearByAvailableDrivers activeNearByAvailableDrivers=ActiveNearByAvailableDrivers();
+            activeNearByAvailableDrivers.locationLatitude=map["latitude"];
+            activeNearByAvailableDrivers.locationLongitude=map["longitude"];
+            activeNearByAvailableDrivers.driverId=map["key"];
+            GeoFireAssistant.updateActiveNearByAvailableDriverLocation(activeNearByAvailableDrivers);
+            displayActiveDriverOnUserMap();
+            break;
+            //display those online a active driver on user's map
+          case Geofire.onGeoQueryReady:
+            activeNearByDriverKeysLoaded=true;
+            displayActiveDriverOnUserMap();
+            break;
+        }
+      }
+      setState(() {
+
+      });
+    });
+  }
+  displayActiveDriverOnUserMap(){
+    setState(() {
+      markerSet.clear();
+      circleSet.clear();
+      Set<Marker> driverMarkerSet=Set<Marker>();
+      for(ActiveNearByAvailableDrivers eachDriver in GeoFireAssistant.activeNearByAvailableDriversList){
+        LatLng eachDriverActivePosition=LatLng(eachDriver.locationLatitude!,eachDriver.locationLongitude!);
+        Marker marker= Marker(markerId: MarkerId(eachDriver.driverId!),
+        position: eachDriverActivePosition,
+        icon: activeNearByIcon!,
+          rotation: 360,
+        );
+
+        driverMarkerSet.add(marker);
+      }
+      setState(() {
+        markerSet=driverMarkerSet;
+      });
+    });
+
+  }
+  
+  createActiveNearByDriverIconMarker(){
+    if(activeNearByIcon ==null){
+      ImageConfiguration imageConfiguration=createLocalImageConfiguration(context,size: Size(0.2,0.2));
+      BitmapDescriptor.fromAssetImage(imageConfiguration, "assets/images/car.png").then((value){
+        activeNearByIcon=value;
+      });
+    }
   }
 
   Future<void> drawPolyLineFromOriginToDestination() async {
@@ -266,6 +347,8 @@ class _TrackOrderState extends State<TrackOrder> {
 
   @override
   Widget build(BuildContext context) {
+
+    createActiveNearByDriverIconMarker();
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

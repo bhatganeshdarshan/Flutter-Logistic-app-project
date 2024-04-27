@@ -70,6 +70,7 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_map: ^6.1.0
   google_places_flutter: ^2.0.8
+  flutter_geofire: ^2.0.3
 
 
 dev_dependencies:
@@ -100,6 +101,7 @@ flutter:
     - assets/images/close.png
     - assets/images/master.png
     - assets/images/next.png
+    - assets/images/
 
 
 flutter_native_splash:
