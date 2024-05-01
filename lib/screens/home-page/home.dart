@@ -32,16 +32,30 @@ class _HomePageState extends State<HomePage>
   bool isLoading = true;
   int? curIndex;
   final vehicleData = SupabaseManager();
+  final supabaseOrders = SupabaseOrders();
   late dynamic vehicle;
   late AnimationController _animationController;
   String? tripDistance = tripDirectionDetailsInfo?.distance_text;
   late double? fare;
+  late dynamic user;
+  dynamic selectedPayment;
+  dynamic userPickLocation;
+  dynamic userDropLocation;
+  int? fareInt;
+  int? finalAmt;
+  final userData = SupabaseUserManager();
 
   @override
   void initState() {
     readData();
+    readUserData();
     super.initState();
     _animationController = AnimationController(vsync: this);
+  }
+
+  readUserData() async {
+    user = await userData.readData();
+    print(user);
   }
 
   readData() async {
@@ -300,8 +314,10 @@ class _HomePageState extends State<HomePage>
                       onClosing: () {},
                       builder: (BuildContext context) {
                         fare = calculateFare(curIndex!);
-                        int? fareInt = fare!.toInt();
+                        fareInt = fare!.toInt();
                         int? taxAmt = (fare! * 0.18).toInt();
+                        finalAmt = fareInt! + taxAmt;
+
                         // int taxAmt = (fareInt * 0.18) as int;
                         return SizedBox(
                           height: 500,
@@ -426,19 +442,23 @@ class _HomePageState extends State<HomePage>
                                             const Spacer(),
                                             CupertinoSegmentedControl(
                                                 children: const {
-                                                  "1": Padding(
+                                                  0: Padding(
                                                       padding:
                                                           EdgeInsets.symmetric(
                                                               horizontal: 8),
                                                       child: Text("COD")),
-                                                  "2": Padding(
+                                                  1: Padding(
                                                       padding:
                                                           EdgeInsets.symmetric(
                                                               horizontal: 8),
                                                       child: Text("Online")),
                                                 },
                                                 selectedColor: Colors.black,
-                                                onValueChanged: (val) {}),
+                                                onValueChanged: (val) {
+                                                  setState(() {
+                                                    selectedPayment = val;
+                                                  });
+                                                }),
                                           ],
                                         ),
                                       ),
@@ -594,7 +614,7 @@ class _HomePageState extends State<HomePage>
                                   ),
                                   CheckoutRow(
                                     title: "Final Total",
-                                    value: "₹ ${fareInt + taxAmt - 5}",
+                                    value: "₹ ${fareInt! + taxAmt - 5}",
                                     onPressed: () {},
                                   ),
                                   Padding(
@@ -637,13 +657,38 @@ class _HomePageState extends State<HomePage>
                                     ),
                                   ),
                                   RoundButton(
-                                      title: "Place Order", onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (c) =>
-                                             PlaceOrder()));
-                                  }),
+                                      title: "Place Order",
+                                      onPressed: () async {
+                                        setState(() {
+                                          finalAmt = fareInt! + taxAmt;
+                                        });
+                                        supabaseOrders.putOrders(
+                                            user[0]['id'],
+                                            clickedCard! + 1,
+                                            selectedPayment,
+                                            Provider.of<AppInfo>(context,
+                                                    listen: false)
+                                                .userPickUpLocation!
+                                                .locationLatitude,
+                                            Provider.of<AppInfo>(context,
+                                                    listen: false)
+                                                .userPickUpLocation!
+                                                .locationLongitude,
+                                            Provider.of<AppInfo>(context,
+                                                    listen: false)
+                                                .userDropOffLocation!
+                                                .locationLatitude,
+                                            Provider.of<AppInfo>(context,
+                                                    listen: false)
+                                                .userDropOffLocation!
+                                                .locationLongitude,
+                                            finalAmt);
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (c) =>
+                                        //          PlaceOrder()));
+                                      }),
                                   const SizedBox(
                                     height: 15,
                                   ),
