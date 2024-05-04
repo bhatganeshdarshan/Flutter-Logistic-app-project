@@ -51,6 +51,40 @@ class SupabaseOrders {
     }
   }
 
+  Future<dynamic> getDriverDetails(driverId) async {
+    try {
+      var response = await Supabase.instance.client
+          .from('drivers')
+          .select()
+          .eq('id', driverId);
+      return response;
+    } catch (e) {
+      print("An error occured : $e");
+    }
+  }
+
+  Future<dynamic> getAvailableOrderDetails(userId) async {
+    try {
+      var response = await Supabase.instance.client
+          .from('available_orders')
+          .select()
+          .eq('id', userId);
+    } catch (e) {
+      print("An error $e occured");
+    }
+  }
+
+  Future cancelCurrentOrder(userId) async {
+    try {
+      await Supabase.instance.client
+          .from('available_orders')
+          .delete()
+          .match({'user_id': userId});
+    } catch (e) {
+      print("An error occured : $e");
+    }
+  }
+
   Future putOrders(userId, vehicleId, paymentType, pickLocLat, pickLocLong,
       dropLocLat, dropLocLong, fare) async {
     try {
