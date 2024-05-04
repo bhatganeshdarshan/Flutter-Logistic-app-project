@@ -348,8 +348,8 @@ class _PlaceOrderState extends State with SingleTickerProviderStateMixin {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(
-          "Confriming Order",
+        title: const Text(
+          "Confirming Order",
           style: TextStyle(color: Colors.cyanAccent),
         ),
         backgroundColor: Colors.transparent,
@@ -360,11 +360,12 @@ class _PlaceOrderState extends State with SingleTickerProviderStateMixin {
           child: FloatingActionButton(
             onPressed: () {
               // Action to go back
+              supabaseOrders.cancelCurrentOrder(userId);
               Navigator.of(context).pop();
-            },
-            child: Icon(Icons.arrow_back,
-                color: Colors.black), // Icon inside the button
-            backgroundColor: Colors.white, // Background color of the button
+            }, // Icon inside the button
+            backgroundColor: Colors.white,
+            child: const Icon(Icons.arrow_back,
+                color: Colors.black), // Background color of the button
           ),
         ),
       ),
@@ -441,134 +442,151 @@ class _PlaceOrderState extends State with SingleTickerProviderStateMixin {
                   height: MediaQuery.of(context).size.height * 0.4,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Row(
+                        padding: const EdgeInsets.all(20.0),
+                        child: ((snapshot.data![0]['driver_id']) != null)
+                            ? Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 24.0,
-                                    backgroundImage: AssetImage(
-                                        'assets/images/driver.png'), // Placeholder image
-                                  ),
-                                  SizedBox(width: 10),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'John Doe',
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
                                       Row(
                                         children: [
-                                          Icon(Icons.star,
-                                              color: Colors.amber, size: 18),
-                                          Text('4.9')
+                                          const CircleAvatar(
+                                            radius: 24.0,
+                                            backgroundImage: AssetImage(
+                                                'assets/images/driver.png'), // Placeholder image
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${snapshot.data![0]['driver_id']}',
+                                                style: const TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const Row(
+                                                children: [
+                                                  Icon(Icons.star,
+                                                      color: Colors.amber,
+                                                      size: 18),
+                                                  Text('4.9')
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ],
-                                      )
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.info_outline,
+                                            color: Colors.green),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title: Text('Driver Details'),
+                                              content: Text(
+                                                  'Additional information about the driver.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(),
+                                                  child: Text('Close'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+                                  Text(
+                                      'Total fare :${snapshot.data![0]['fare']}',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.cyanAccent)),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          'Total Distance : ${tripDirectionDetailsInfo?.distance_text}',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.blue)),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                          'Estd Time :${tripDirectionDetailsInfo?.duration_text}',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.blue)),
+                                    ],
+                                  ),
+
+                                  // Your existing content here
+
+                                  _buildVehicleDetails(),
+                                  SizedBox(height: 20.0),
+
+                                  _buildPaymentMethodSection(),
+                                  SizedBox(height: 20.0),
+                                  _buildLocationSection(
+                                      Icons.my_location,
+                                      "Pickup Location",
+                                      Provider.of<AppInfo>(context)
+                                          .userPickUpLocation!
+                                          .locationName!,
+                                      Colors.blue),
+                                  SizedBox(height: 10.0),
+                                  _buildLocationSection(
+                                      Icons.place,
+                                      "Dropoff Location",
+                                      Provider.of<AppInfo>(context)
+                                          .userDropOffLocation!
+                                          .locationName!,
+                                      Colors.red),
+                                  const SizedBox(height: 20.0),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          supabaseOrders
+                                              .cancelCurrentOrder(userId);
+                                          Navigator.pop(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.red, // Background color
+                                        ),
+                                        child: const Text('Cancel Ride',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      ),
                                     ],
                                   ),
                                 ],
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.info_outline,
-                                    color: Colors.green),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      title: Text('Driver Details'),
-                                      content: Text(
-                                          'Additional information about the driver.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(),
-                                          child: Text('Close'),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-
-                          Text('Total fare :${snapshot.data![0]['fare']}',
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.cyanAccent)),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                  'Total Distance : ${tripDirectionDetailsInfo?.distance_text}',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.blue)),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                  'Estd Time :${tripDirectionDetailsInfo?.duration_text}',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.blue)),
-                            ],
-                          ),
-
-                          // Your existing content here
-
-                          _buildVehicleDetails(),
-                          SizedBox(height: 20.0),
-
-                          _buildPaymentMethodSection(),
-                          SizedBox(height: 20.0),
-                          _buildLocationSection(
-                              Icons.my_location,
-                              "Pickup Location",
-                              Provider.of<AppInfo>(context)
-                                  .userPickUpLocation!
-                                  .locationName!,
-                              Colors.blue),
-                          SizedBox(height: 10.0),
-                          _buildLocationSection(
-                              Icons.place,
-                              "Dropoff Location",
-                              Provider.of<AppInfo>(context)
-                                  .userDropOffLocation!
-                                  .locationName!,
-                              Colors.red),
-                          const SizedBox(height: 20.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () async {
-                                  supabaseOrders.cancelCurrentOrder(userId);
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Colors.red, // Background color
-                                ),
-                                child: const Text('Cancel Ride',
-                                    style: TextStyle(color: Colors.white)),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                              )
+                            : const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text("Assigning Driver"),
+                                  CircularProgressIndicator(),
+                                ],
+                              )),
                   ),
                 );
               });
