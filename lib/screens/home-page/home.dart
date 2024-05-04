@@ -708,7 +708,7 @@ class _HomePageState extends State<HomePage>
                                               'Select a Payment Method');
                                         } else {
                                           print(selectedPayment);
-                                          supabaseOrders.putOrders(
+                                          await supabaseOrders.putOrders(
                                               user[0]['id'],
                                               clickedCard! + 1,
                                               selectedPayment,
