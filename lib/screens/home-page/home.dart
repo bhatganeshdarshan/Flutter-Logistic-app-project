@@ -703,32 +703,38 @@ class _HomePageState extends State<HomePage>
                                         setState(() {
                                           finalAmt = fareInt! + taxAmt - 7;
                                         });
-                                        print(selectedPayment);
-                                        supabaseOrders.putOrders(
-                                            user[0]['id'],
-                                            clickedCard! + 1,
-                                            selectedPayment,
-                                            Provider.of<AppInfo>(context,
-                                                    listen: false)
-                                                .userPickUpLocation!
-                                                .locationLatitude,
-                                            Provider.of<AppInfo>(context,
-                                                    listen: false)
-                                                .userPickUpLocation!
-                                                .locationLongitude,
-                                            Provider.of<AppInfo>(context,
-                                                    listen: false)
-                                                .userDropOffLocation!
-                                                .locationLatitude,
-                                            Provider.of<AppInfo>(context,
-                                                    listen: false)
-                                                .userDropOffLocation!
-                                                .locationLongitude,
-                                            finalAmt);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (c) => PlaceOrder()));
+                                        if (selectedPayment == null) {
+                                          showSnackBarError(context,
+                                              'Select a Payment Method');
+                                        } else {
+                                          print(selectedPayment);
+                                          supabaseOrders.putOrders(
+                                              user[0]['id'],
+                                              clickedCard! + 1,
+                                              selectedPayment,
+                                              Provider.of<AppInfo>(context,
+                                                      listen: false)
+                                                  .userPickUpLocation!
+                                                  .locationLatitude,
+                                              Provider.of<AppInfo>(context,
+                                                      listen: false)
+                                                  .userPickUpLocation!
+                                                  .locationLongitude,
+                                              Provider.of<AppInfo>(context,
+                                                      listen: false)
+                                                  .userDropOffLocation!
+                                                  .locationLatitude,
+                                              Provider.of<AppInfo>(context,
+                                                      listen: false)
+                                                  .userDropOffLocation!
+                                                  .locationLongitude,
+                                              finalAmt);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (c) =>
+                                                      PlaceOrder()));
+                                        }
                                       }),
                                   const SizedBox(
                                     height: 15,
@@ -741,11 +747,49 @@ class _HomePageState extends State<HomePage>
                       })
                   : FloatingActionButton(
                       onPressed: () {},
-                      child: const Icon(Icons.location_off),
+                      child: const Text("Please Select Pick/Drop Locations"),
                     )
               : const SizedBox(),
         )
       ],
+    );
+  }
+
+  dynamic showSnackBarError(BuildContext context, String txt) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: SizedBox(
+          height: 30,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.error,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Text(
+                  txt,
+                  style: const TextStyle(color: Colors.white),
+                  overflow: TextOverflow.visible,
+                ),
+              )
+            ],
+          ),
+        ),
+        backgroundColor: ApplicationColors.mainThemeBlue,
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'Close',
+          textColor: Colors.white,
+          backgroundColor: Colors.black,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      ),
     );
   }
 }
