@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage>
   String? tripDistance = tripDirectionDetailsInfo?.distance_text;
   late double? fare;
   late dynamic user;
-  dynamic selectedPayment;
+  int? selectedPayment;
   dynamic userPickLocation;
   dynamic userDropLocation;
   int? fareInt;
@@ -70,11 +70,20 @@ class _HomePageState extends State<HomePage>
     print("distanceeeeeeeeeeeeeeee : $tripDistance");
   }
 
+  updatePayment(int selPay) {
+    setState(() {
+      print("updated");
+      selectedPayment = selPay;
+    });
+  }
+
   bool openNavigationDrawer = true;
 
   final stream = Supabase.instance.client
       .from('available_orders')
       .stream(primaryKey: [userId]).eq('user_id', userId);
+
+  List<bool> paymentSelection = List.generate(2, (_) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -327,7 +336,7 @@ class _HomePageState extends State<HomePage>
 
                         // int taxAmt = (fareInt * 0.18) as int;
                         return SizedBox(
-                          height: 500,
+                          height: 510,
                           child: Center(
                             // child: ElevatedButton(
                             //     onPressed: () {}, child: const Text("Next")),
@@ -447,25 +456,50 @@ class _HomePageState extends State<HomePage>
                                                   fontWeight: FontWeight.w600),
                                             ),
                                             const Spacer(),
-                                            CupertinoSegmentedControl(
-                                                children: const {
-                                                  0: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 8),
-                                                      child: Text("COD")),
-                                                  1: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 8),
-                                                      child: Text("Online")),
-                                                },
-                                                selectedColor: Colors.black,
-                                                onValueChanged: (val) {
-                                                  setState(() {
-                                                    selectedPayment = val;
-                                                  });
-                                                }),
+                                            // CupertinoSegmentedControl(
+                                            //     children: const {
+                                            //       0: Padding(
+                                            //           padding:
+                                            //               EdgeInsets.symmetric(
+                                            //                   horizontal: 8),
+                                            //           child: Text("COD")),
+                                            //       1: Padding(
+                                            //           padding:
+                                            //               EdgeInsets.symmetric(
+                                            //                   horizontal: 8),
+                                            //           child: Text("Online")),
+                                            //     },
+                                            //     selectedColor: Colors.black,
+                                            //     onValueChanged: (val) {
+                                            //       setState(() {
+                                            //         selectedPayment = val;
+                                            //       });
+                                            //     }),
+                                            ToggleButtons(
+                                              isSelected: paymentSelection,
+                                              onPressed: (index) {
+                                                setState(() {
+                                                  print(index);
+                                                  if (index == 0 &&
+                                                      paymentSelection[0] ==
+                                                          false) {
+                                                    paymentSelection[0] = true;
+                                                    paymentSelection[1] = false;
+                                                    updatePayment(0);
+                                                  } else if (index == 1 &&
+                                                      paymentSelection[1] ==
+                                                          false) {
+                                                    paymentSelection[1] = true;
+                                                    paymentSelection[0] = false;
+                                                    updatePayment(1);
+                                                  }
+                                                });
+                                              },
+                                              children: const [
+                                                Text("COD"),
+                                                Text("Online"),
+                                              ],
+                                            )
                                           ],
                                         ),
                                       ),
@@ -667,8 +701,9 @@ class _HomePageState extends State<HomePage>
                                       title: "Place Order",
                                       onPressed: () async {
                                         setState(() {
-                                          finalAmt = fareInt! + taxAmt;
+                                          finalAmt = fareInt! + taxAmt - 7;
                                         });
+                                        print(selectedPayment);
                                         supabaseOrders.putOrders(
                                             user[0]['id'],
                                             clickedCard! + 1,
